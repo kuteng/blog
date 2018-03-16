@@ -1,10 +1,9 @@
-linux的用法笔记
+工作文档集合
 ======================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   vim
-   archlinux
-   mysql
+
+   docs/question

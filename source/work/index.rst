@@ -8,3 +8,4 @@
    note.rst
    task.rst
    diary.rst
+   docs.rst
