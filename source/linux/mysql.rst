@@ -2,8 +2,7 @@ MySql备忘
 ======================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
 
 常用命令
 ^^^^^^^^^^^^^^^

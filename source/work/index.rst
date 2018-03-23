@@ -5,7 +5,9 @@
    :maxdepth: 2
    :caption: Contents:
 
-   note.rst
-   task.rst
-   diary.rst
-   docs.rst
+   note
+   task
+   diary
+   docs
+   viewpoint
+   improve

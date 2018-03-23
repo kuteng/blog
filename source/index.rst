@@ -7,11 +7,15 @@
 ======================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
    linux/index
    work/index
+   skill/index
+   task/index
+   meno/index
+   excerpt/index
 
 
 

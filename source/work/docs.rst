@@ -5,5 +5,5 @@
    :maxdepth: 2
    :caption: Contents:
 
-
    docs/question
+   docs/case

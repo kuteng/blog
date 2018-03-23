@@ -2,8 +2,7 @@ Vim用法
 =============================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
 
 常用命令
 ^^^^^^^^^^^^^^
@@ -14,12 +13,12 @@ Vim用法
     set foldmethod=indent
     set fdm=indent
 
-- manual           手工定义折叠
-- indent           更多的缩进表示更高级别的折叠
-- expr             用表达式来定义折叠
-- syntax           用语法高亮来定义折叠
-- diff             对没有更改的文本进行折叠
-- marker           对文中的标志折叠
+- ``manual``           手工定义折叠
+- ``indent``           更多的缩进表示更高级别的折叠
+- ``expr``             用表达式来定义折叠
+- ``syntax``           用语法高亮来定义折叠
+- ``diff``             对没有更改的文本进行折叠
+- ``marker``           对文中的标志折叠
 
 
 设置tab为四个空格
@@ -32,31 +31,31 @@ Vim用法
 
 使用标签页
 ###################
--   使用标签页打开多个文件
+- 使用标签页打开多个文件 ::
 
-    *   vim -p [fileName1] [fileName2] ...
+    vim -p [fileName1] [fileName2] ...
 
--   启动标签页：
+- 启动标签页： ::
 
-    *   :tabe[dit]
-    *   :tabnew [fileName]
+    :tabe[dit]
+    :tabnew [fileName]
 
--   切换标签页
+- 切换标签页 ::
 
-    *   :tabn[ext]、:tabN[ext]、:tabp[revious]
-    *   :tabn[ext] {count}
-    *   gt、gT
-    *   :tabfir[st]、:tabl[ast]
+    :tabn[ext]、:tabN[ext]、:tabp[revious]
+    :tabn[ext] {count}
+    gt、gT
+    :tabfir[st]、:tabl[ast]
 
--   列出所有标签页
+- 列出所有标签页 ::
 
-    *   :tabs
+    :tabs
 
--   关闭标签页
+- 关闭标签页 ::
 
-    *   :tabc[lose][!]  关闭当前标签页
-    *   :tabc[lose][!]  {count} 关闭第N个标签页。
-    *   :tabo[nly][!]   关闭其他标签页。
+    :tabc[lose][!]  关闭当前标签页
+    :tabc[lose][!]  {count} 关闭第N个标签页。
+    :tabo[nly][!]   关闭其他标签页。
 
 
 查找
@@ -106,4 +105,4 @@ Vim用法
 
 快捷命令
 ##############
--   将选中范围内的字母变为小写`gu`，变为大写`gU`
+-   将选中范围内的字母变为小写 `gu` ，变为大写 `gU`

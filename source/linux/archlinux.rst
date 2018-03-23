@@ -2,8 +2,7 @@ ArchLinux
 ==============
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
 
 安装的软件
 ^^^^^^^^^^^^^
@@ -40,7 +39,19 @@ ArchLinux
 
 命令备忘
 ^^^^^^^^^^^^^
-1.  taskwarrior的经典指令：::
+#.  taskwarrior的经典指令：::
+
+        systemctl enable [service name]
+
+    显示所有已启动的服务： ::
+
+        systemctl list-units --type=service
+
+    显示所有服务： ::
+
+        systemctl -a --type=service
+
+#.  taskwarrior的经典指令：::
 
         task add "ES-深入搜索-近似匹配" due:tomorrow proj:work pri:H +es depends:3
         task [ID] modify due:3day
@@ -51,68 +62,68 @@ ArchLinux
         task [ID] done 将任务设置为完成。
         task completed 查看已经完成的任务。
 
-2.  向其他用户发送消息::
+#.  向其他用户发送消息::
 
         write [用户名] [ttyname(例如pts/1)]
         write all
         wall
 
-3.  判断用户是否存在::
+#.  判断用户是否存在::
 
         id peter >& /dev/null
         if [ $? -ne 0 ];then
             echo "don't have the user"
         fi
 
-4.  创建目录及子目录。::
+#.  创建目录及子目录。::
 
         mkdir -p folder1/folder2/folder3
 
-5.  软件升级::
+#.  软件升级::
 
         pacman -Syu
 
-6.  进程搜索::
+#.  进程搜索::
 
         ps -d -opid,etime,args | grep "$1" | grep -v grep
 
-7.  数据库查询各命令的执行时间::
+#.  数据库查询各命令的执行时间::
 
         show processlist
 
-8.  判断sql语句执行逻辑::
+#.  判断sql语句执行逻辑::
 
         explain select 3 from creative_all where channel = 3 and update_status = 3
 
-9.  显示文件peter.note的第5行到第9行的内容。::
+#.  显示文件peter.note的第5行到第9行的内容。::
 
         sed -n "5,9p" peter.note
 
-10. 对数据结果进行统计<br/>
+#. 对数据结果进行统计<br/>
     wc命令：统计指定文件中的字节数、字数、行数，并将统计结果显示输出。
     例如：统计ps结果的行数::
 
         ps -aux "sync/" | wc -l
 
-11. 使用更简洁的搜索文件命令：::
+#. 使用更简洁的搜索文件命令：::
 
         mlocate
 
-12. xfce4的锁屏命令::
+#. xfce4的锁屏命令::
 
         xflock4
 
-13. 启动VNC服务的命令：::
+#. 启动VNC服务的命令：::
 
         vncserver
 
-14. 更新mirrorlist的命令::
+#. 更新mirrorlist的命令::
 
         sudo reflector --latest 100 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
-15. 启动Vnc: ``systemctl status x11vnc``
+#. 启动Vnc: ``systemctl start x11vnc``
 
-16. linux系统监控的命令
+#. linux系统监控的命令
 
     -   top
     -   vmstat：虚拟内存统计
