@@ -35,7 +35,7 @@ MySql备忘
 
     show index from sp_etl.creative_audience_network;
 
-查询各语句的执行时间：
+查询各IP的连接数：
 #########################
 ::
 
