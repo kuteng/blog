@@ -7,6 +7,11 @@ PHP
 
 语法
 ^^^^^^^^^^^^^^^
+获取毫秒时间戳。
+#######################
+::
+    microtime(true);
+
 数组去重
 #######################
 ::
@@ -66,8 +71,24 @@ PHP
     array_key_exists($key, $array)
     isset($array[$key])
 
+Yii2
+^^^^^^^^^^^^^^^^^^^^^^^
 Yii2框架
 #######################
 yii\base\Controller的action中，获取从命令行中传入的参数数组 ::
 
     Yii::$app->controller->module->requestedParams
+
+数据库操作
+#######################
+直接使用原生SQL语句
+:::::::::::::::::::::::
+::
+
+    $connection = \Yii::$app->sp_etl;
+    $sql = "select p.category
+        from sp_profile.advertiser_profile p, sp_etl.app_goods_relation r, sp_etl.ecommerce_goods_detail d
+        where r.creative_all_id = {$creative_id} and r.goods_id = d.id and p.store_id = d.merchant_url";
+    $datas = $connection->createCommand($sql)->queryAll();
+
+

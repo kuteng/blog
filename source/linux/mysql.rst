@@ -35,13 +35,28 @@ MySql备忘
 
     show index from sp_etl.creative_audience_network;
 
-查询各IP的连接数：
+查询各语句的执行时间：
 #########################
 ::
 
     show processlist
-    select count(*) as num from (select SUBSTR(host, 1, INSTR(host, ':') - 1) as ip, db , command, info from  information_schema.processlist) as a;
-    select ip, count(*) as num from (select SUBSTR(host, 1, INSTR(host, ':') - 1) as ip, db , command, info from  information_schema.processlist) as a group by ip order by num desc;
+
+查询各IP的连接数：
+#########################
+::
+
+    select count(*) as num
+    from (
+        select SUBSTR(host, 1, INSTR(host, ':') - 1) as ip, db , command, info
+        from  information_schema.processlist
+    ) as a;
+
+    select ip, count(*) as num
+    from (
+        select SUBSTR(host, 1, INSTR(host, ':') - 1) as ip, db , command, info
+        from  information_schema.processlist
+    ) as a
+    group by ip order by num desc;
 
 创建数据库
 #########################

@@ -7,3 +7,4 @@
 
    docs/question
    docs/case
+   docs/insufficient
