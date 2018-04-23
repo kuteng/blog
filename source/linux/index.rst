@@ -6,7 +6,9 @@ linux的用法笔记
    :caption: Contents:
 
    vim
+   shell
    archlinux
    mysql
    git
    tools
+   centos

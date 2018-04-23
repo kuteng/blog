@@ -92,25 +92,25 @@ todo_include_todos = True
 # a list of builtin themes.
 #
 # html_theme = 'alabaster'
-# html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_rtd_theme'
 # html_theme = 'pyramid'
 # html_theme = 'sphinxdoc'
-html_theme = 'agogo'
+# html_theme = 'agogo'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
 # html_theme_options = {}
-html_theme_options = {
+# html_theme_options = {
     # 'nosidebar': True,
     # 'sidebarwidth': '100px',
-    'body_max_width': '1200px',
-    'pagewidth': '90%',
-    'documentwidth': '80%',
-    'sidebarwidth': '20%',
+#     'body_max_width': '1200px',
+#     'pagewidth': '90%',
+#     'documentwidth': '80%',
+#     'sidebarwidth': '20%',
     # 'sticky_navigation': True,
-}
+# }
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

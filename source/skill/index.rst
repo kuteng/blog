@@ -17,6 +17,7 @@
     spring
     php
     docker
+    english
 
 软技能
 ^^^^^^^^^^^^^^^^^^^
@@ -40,6 +41,15 @@
 - PaaS
 - 区块链
 - Google评分卡
+- Serverless
+
+  - 你们是怎么使用Serverless框架技术的?主要用在什么样的业务场景？
+  - Serverless为人诟病的一点是Debug困难，你在实践中有哪些经验技巧？
+  - 有哪些技术领域可能是Serverless的潜在战场？区块链？人工智能？IoT？
+
+- Serverless/FaaS
+- kuberntes/Docker Swarm/Apache Mesos
+- 日志实时分析：ELK Stack（Elastic/Logstash/Kibana）
 
 感兴趣的网址
 ^^^^^^^^^^^^^^^^^^^

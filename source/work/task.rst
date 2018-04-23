@@ -35,3 +35,7 @@
 - 我的开源经历就从翻译开始吧！
 
   - Spring Boot Cloud Config
+
+为了再就业
+^^^^^^^^^^^^^
+- 了解tablestore用法。

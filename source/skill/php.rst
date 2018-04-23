@@ -2,7 +2,7 @@ PHP
 =====================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
 语法
@@ -75,9 +75,21 @@ Yii2
 ^^^^^^^^^^^^^^^^^^^^^^^
 Yii2框架
 #######################
-yii\base\Controller的action中，获取从命令行中传入的参数数组 ::
+- yii\base\Controller的action中，获取从命令行中传入的参数数组 ::
 
     Yii::$app->controller->module->requestedParams
+
+- 获取 `public action` 的用法： ::
+
+    ./yii help/usage <controller>[/<action>]
+
+  例如： ::
+
+    ./yii help/usage creative/index-entry
+
+  返回的结果： ::
+
+    yii creative/index-entry <configKey> [procType] [isTest]
 
 数据库操作
 #######################

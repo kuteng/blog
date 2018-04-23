@@ -4,6 +4,12 @@ ElasticSearch
 .. toctree::
    :maxdepth: 3
 
+问题
+^^^^^^^^^^^^^^^^^
+- `unassigned_shards` 是什么东西，它是如何产生的。Elasticsearch的shards是字段产生/分配的吗？一创建新的索引，就会有新的shards，如果是这样，为什么会有 `unassigned_shards` ？
+- `shards` 的作用是什么？
+- ES是否可以更具数据特性，进行一些压缩？
+
 知识点
 ^^^^^^^^^^^^^^^^^
 - pretty: 格式化ES的输出。
@@ -78,3 +84,9 @@ ES运维
 ^^^^^^^^^^^^^^^^
 - ``[URL]:9200/_cat/nodes?help`` 查询节点状况
 - ``[URL]:9200/_cat/nodes?v&h=id,pid,ip,host,disk.avail' && echo`` 查询磁盘可用空间大小
+- ``curl '[URL]:9200/_cat/indices?v'`` 在命令行查看所有索引。
+- ``curl '[URL]:9200/_cat/indices?v' | grep ' \.' && echo`` 查看名称以"."开头的索引的信息。
+
+思路
+^^^^^^^^^^^^^^^^^
+- 手动为文档生成id

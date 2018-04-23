@@ -6,32 +6,63 @@ ArchLinux
 
 安装的软件
 ^^^^^^^^^^^^^
--   有道词典。命令：ydcv
--   任务管理工具。命令：task，官网：https://taskwarrior.org，软件名：taskwarrior
-    -   查看task的帮助信息的方式是：man task
--   笔记工具pynote。运行指令是note。安装的方式：pip install pynote。—— https://pypi.python.org/pypi/pynote
--   向内网发送邮件，需要安装mailutils
--   安装yaourt，以便安装AUR上的软件。
--   使用makepkg命令的方式，安装AUR上的软件。
--   ntfs-3g，安装ntfs的格式化工具
--   番茄时间：gnome-pomodoro: http://gnomepomodoro.org/
--   linux软件市场：https://extensions.gnome.org/
--   绘图软件：YED
--   php的包管理：composer。官方描述：Dependency Manager for PHP
--   抓包工具：wireshark
--   截图工具：deepin-screenshot
--   dialog命令，可以在控制台上绘制“界面”。
--   锁屏软件：light-locker, xscreensaver
--   安装了docker
--   网络工具：pacman -S net-tools dnsutils inetutils iproute2
--   安装了pynote，运行指令是note。—— https://pypi.python.org/pypi/pynote
--   安装了sdk：http://sdkman.io/install.html
+- 有道词典。命令：ydcv
+- 任务管理工具。命令：task，官网：https://taskwarrior.org，软件名：taskwarrior
+  -   查看task的帮助信息的方式是：man task
+- 笔记工具pynote。运行指令是note。安装的方式：pip install pynote。—— https://pypi.python.org/pypi/pynote
+- 向内网发送邮件，需要安装mailutils
+- 安装yaourt，以便安装AUR上的软件。
+- 使用makepkg命令的方式，安装AUR上的软件。
+- ntfs-3g，安装ntfs的格式化工具
+- 番茄时间：gnome-pomodoro: http://gnomepomodoro.org/
+- linux软件市场：https://extensions.gnome.org/
+- 绘图软件：YED
+- php的包管理：composer。官方描述：Dependency Manager for PHP
+- 抓包工具：wireshark
+- 截图工具：deepin-screenshot
+- dialog命令，可以在控制台上绘制“界面”。
+- 锁屏软件：light-locker, xscreensaver
+- 安装了docker
+- 网络工具：pacman -S net-tools dnsutils inetutils iproute2
+- 安装了pynote，运行指令是note。—— https://pypi.python.org/pypi/pynote
+- 安装了sdk：http://sdkman.io/install.html
+- 桌面提示的工具：
+
+  - kdialog ::
+
+      kdialog --dontagain myscript:nofilemsg --msgbox "File: '~/.backup/config' not found."
+
+  - zenity
+  - Dialog: 控制台显示UI。 ::
+
+      #!/bin/bash
+      dialog --title "Delete file" \
+      --backtitle "Linux Shell Script Tutorial Example" \
+      --yesno "Are you sure you want to permanently delete \"/tmp/foo.txt\"?" 7 60
+
+      # Get exit status
+      # 0 means user hit [yes] button.
+      # 1 means user hit [no] button.
+      # 255 means user hit [Esc] key.
+      response=$?
+      case $response in
+         0) echo "File deleted.";;
+         1) echo "File not deleted.";;
+         255) echo "[ESC] key pressed.";;
+      esac
+
+  - gmessage - 基于 GTK xmessage 的克隆
+  - xmessage - 在窗口中显示或询问消息（基于 X 的 /bin/echo）
+  - whiptail - 显示来自 shell 脚本的对话框
+  - python-dialog - 用于制作简单文本或控制台模式用户界面的 Python 模块
+
+- logger 命令将信息写到系统日志文件
 
 安装的服务
 ^^^^^^^^^^^^^
 -   kibana, elasticsearch
 
-开启的服务或命令备忘。
+开启的服务或命令备忘
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 -   开启了“嵌套虚拟化”（home archlinux linux）
     -   相关细节：https://wiki.archlinux.org/index.php/KVM_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)

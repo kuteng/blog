@@ -63,6 +63,10 @@
 
 技术书籍
 ^^^^^^^^^^^^^^^^^^^
+.. toctree::
+   :maxdepth: 1
+
+   books/https_authoritative_guide
 
 其他书籍
 ^^^^^^^^^^^^^^^^^^^
