@@ -103,4 +103,15 @@ Yii2框架
         where r.creative_all_id = {$creative_id} and r.goods_id = d.id and p.store_id = d.merchant_url";
     $datas = $connection->createCommand($sql)->queryAll();
 
+从ActiveRecord获取原生sql
+::::::::::::::::::::::::::::::
+::
+
+    $query = Salesorder::find()
+        ->where(['order_id'=>[1,2,3,4]])
+        ->select(['order_id']);
+    // get the AR raw sql in YII2
+    $commandQuery = clone $query;
+    echo $commandQuery->createCommand()->getRawSql();
+    exit;
 
