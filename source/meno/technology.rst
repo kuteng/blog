@@ -3,6 +3,14 @@
 听说的技术名词
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 - UUID
+- serverless
+- D3 (Data-Driven Documents)
+- TiDB
+- Spring Cloud Stream
+- Apache SkyWalking
+- Kubernetes
+- Vigil: 一个云服务的监控工具
+- lstio: 一个连接、管理和保护为服务的开放平台。
 
 加密算法的方法名的区分
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
