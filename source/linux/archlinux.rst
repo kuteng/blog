@@ -26,6 +26,11 @@ ArchLinux
 - 网络工具：pacman -S net-tools dnsutils inetutils iproute2
 - 安装了pynote，运行指令是note。—— https://pypi.python.org/pypi/pynote
 - 安装了sdk：http://sdkman.io/install.html
+- 安装博客工具：
+  - Sphinx ::
+
+    sudo pip install sphinx
+
 - 桌面提示的工具：
 
   - kdialog ::
