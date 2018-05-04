@@ -6,6 +6,7 @@
 - serverless
 - D3 (Data-Driven Documents)
 - TiDB
+- MaxCompute
 - Spring Cloud Stream
 - Apache SkyWalking
 - Kubernetes
