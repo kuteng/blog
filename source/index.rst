@@ -16,6 +16,7 @@
    task/index
    meno/index
    excerpt/index
+   note/index
 
 
 
