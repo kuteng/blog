@@ -1,6 +1,9 @@
 技能
 =======================
 
+.. toctree::
+   :maxdepth: 1
+
 关注的技能
 ^^^^^^^^^^^^^^^^^^
 - Service Mesh
@@ -10,7 +13,6 @@
 ^^^^^^^^^^^^^^^^^^
 .. toctree::
     :maxdepth: 1
-
 
     elasticsearch
     python

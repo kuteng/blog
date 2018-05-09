@@ -3,7 +3,6 @@
 
 .. toctree::
    :maxdepth: 1
-   :caption: Contents:
 
 技术摘录
 ^^^^^^^^^^^^^^^^^^^
