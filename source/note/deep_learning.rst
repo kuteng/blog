@@ -58,7 +58,8 @@ numpy
 
     vector = numpy.array([1., 2, 3, 4]);
     # 判断数组中，各元素是否等于10
-    print(vector == 10);
+    print(vector == 2);
+    print(vector[vector == 2]);
     matrix = numpy.array([
         [5, 10, 15],
         [20, 25, 30],
@@ -69,7 +70,8 @@ numpy
 
   输出结果是 ::
 
-    [False False False False]
+    [False True False False]
+    [2]
     [[False False  True]
      [False False False]
      [False False False]]
@@ -131,3 +133,23 @@ numpy
 
     [ True  True False False]
     [50 50 15 20]
+
+- 类型转换 ::
+
+    vector = numpy.array(["1", "2", "3"]);
+    print(vector);
+    print(vector.dtype);
+    # 强行修改数组中所有元素的类型。
+    vector = vector.astype(float);
+    print(vector);
+    print(vector.dtype);
+
+  输出结果 ::
+
+    ['1' '2' '3']
+    |S1
+    [1. 2. 3.]
+    float64
+
+- 求极值
+- 求和

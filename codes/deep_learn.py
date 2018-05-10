@@ -4,76 +4,71 @@
 import numpy;
 
 vector = numpy.array([1., 2, 3, 4]);
-print(vector.shape);
-print(vector.dtype);
-vector = numpy.array([1., "2", 3, 4]);
-print(vector.shape);
-print(vector.dtype);
-
-world_alcohol = numpy.genfromtxt("datas/world_alcohol.txt", delimiter=",", dtype=str, skip_header=1);
-print(type(world_alcohol));
-print(world_alcohol);
-
-uruguay_other_1986 = world_alcohol[1,4];
-print(uruguay_other_1986);
-third_country = world_alcohol[2, 2];
-print(third_country);
-
-print("\n---切片---");
-print(vector);
-print(vector[0:3]);
-
-
-print("\n---列---");
-# 单独的冒号表示所有列。
-print(world_alcohol[:,1]);
-
-print("\n---列（范围）---");
-print(world_alcohol[:,0:2]);
-
-print("\n---行（范围），列（范围）---");
-print(world_alcohol[0:9,0:2]);
-
-print("\n---计算---");
-vector = numpy.array([1., 2, 3, 4]);
-print(vector == 10);
 matrix = numpy.array([
     [5, 10, 15],
     [20, 25, 30],
     [35, 40, 45]
-    ]);
-print(matrix == 15);
+]);
+world_alcohol = numpy.genfromtxt("world_alcohol.txt", delimiter=",", dtype=str, skip_header=1);
 
-print("");
-vector = numpy.array([5, 10, 3 * 5, 4 * 5]);
-equal_to_ten = (vector % 10 == 0);
-print(equal_to_ten);
-print(vector[equal_to_ten]);
+# qiujizhi
+print("\n---求极值---");
+print(vector.min());
+print(vector.max());
 
-second_column_25 = (matrix[:, 1] == 25);
-print("");
-print(second_column_25);
-print(matrix[second_column_25, :]);
-print(matrix[:, second_column_25]);
+print("\n---求和---");
+# 对行求和
+print(matrix.sum(axis=1));
+# 对列求和
+print(matrix.sum(axis=0));
 
-print("");
-second_column_25 = (matrix[:, 1] % 10 == 0);
-print(second_column_25);
-print(matrix[second_column_25, :]);
-print(matrix[:, second_column_25]);
+print("\n--- 初始化 和 转换 ----");
+# 生成一个连续的一维数组（向量）
+a = numpy.arange(15);
+print(a);
+# 将一维数组（向量）转换为二维数组（矩阵）: 指定行数/列数
+b = a.reshape(3, 5);
+print(b);
 
-print("");
-vector = numpy.array([1, 2, 3, 4]);
-vector = vector * 5;
-equal_to_ten_or_five = (vector == 10) | (vector == 5);
-print(equal_to_ten_or_five);
-vector[equal_to_ten_or_five] = 50;
-print(vector);
+print("\n--- 矩阵的属性 ---");
+# 打印矩阵的size。
+print(b.shape);
+# 打印矩阵的维度。
+print(b.ndim);
+# 打印矩阵的类型。
+print(b.dtype);
+print(b.dtype.name);
+# 打印元素数量。
+print(a.size);
+print(b.size);
 
-print("\n---关于类型---");
-vector = numpy.array(["1", "2", "3"]);
-print(vector);
-print(vector.dtype);
-vector = vector.astype(float);
-print(vector);
-print(vector.dtype);
+print("\n--- 矩阵初始化 ---");
+# 初始化一个3行4列，元素全为0的矩阵。默认类型为float
+print(numpy.zeros((3, 4)));
+# 生成一个元素都为1，类型为int的三维矩阵。
+print(numpy.ones((2, 3, 4), dtype=numpy.int32));
+# 生成一个元素有序的三维矩阵。元素在[10, 30)之间且间隔为5的一组数。
+print(numpy.arange(10, 30, 5));
+# 类似于上面
+print(numpy.arange(0, 2, 0.3));
+
+# 随即生成矩阵。默认是(-1, 1)之上的值。
+print(numpy.random.random((2, 3)));
+
+# 生成一个向量，size为100，元素内容是[0, 2*PI]之间的间隔相同的100个数字。
+print(numpy.linspace(0, 2 * numpy.pi, 100));
+
+# 矩阵计算。
+print(numpy.sin(numpy.linspace(0, 6.24, 100)));
+
+print("\n--- 矩阵计算 ---");
+a = numpy.array([20, 30, 40, 50]);
+b = numpy.arange(4);
+# 矩阵向减。两矩阵的size必须相同？
+c = a - b;
+print(c);
+# 矩阵与数字运算。 `**` 表示成方操作。  
+print(c - 1);
+print(c * 2);
+print(c ** 2);
+print(c < 30);
