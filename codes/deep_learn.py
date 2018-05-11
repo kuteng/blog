@@ -72,3 +72,19 @@ print(c - 1);
 print(c * 2);
 print(c ** 2);
 print(c < 30);
+# 矩阵间的操作。
+A = numpy.array([[1, 1], [0, 1]]);
+B = numpy.array([[2, 0], [3, 4]]);
+# 普通的*乘
+print(A * B);
+# 矩阵乘法
+print(A.dot(B));
+print(numpy.dot(A, B));
+
+import numpy as np;
+B = np.arange(3);
+print(B);
+# e的n次方
+print(np.exp(B));
+# 求平方根
+print(np.sqrt(B));
