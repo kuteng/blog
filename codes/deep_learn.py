@@ -53,6 +53,7 @@ print(numpy.arange(10, 30, 5));
 print(numpy.arange(0, 2, 0.3));
 
 # 随即生成矩阵。默认是(-1, 1)之上的值。
+print("\n---随机矩阵---");
 print(numpy.random.random((2, 3)));
 
 # 生成一个向量，size为100，元素内容是[0, 2*PI]之间的间隔相同的100个数字。
@@ -88,3 +89,14 @@ print(B);
 print(np.exp(B));
 # 求平方根
 print(np.sqrt(B));
+
+print("\n--- 其他 ---");
+a = np.floor(10 * np.random.random((3, 4)));
+print(a);
+print(a.ravel());
+a.shape = (6, 2);
+print(a);
+print(a.T);
+# -1让程序自己计算。但是如果第二个参数，我们自己写错了，就会报错。
+a.reshape(3, -1);
+print(a);
