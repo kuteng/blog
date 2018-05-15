@@ -5,6 +5,54 @@ Python
    :maxdepth: 2
    :caption: Contents:
 
+小技巧
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- `pid` 操作 ::
+
+    import os;
+    # 获取进程pid
+    pid=os.getpid()
+    # 杀掉进程
+    os.kill(pid, signal.SIGQUIT)
+
+- 修改进程名 ::
+
+    from setproctitle import setproctitle
+    setproctitle("the new proc's name")
+
+- 内部队列 ::
+
+    from Queue import Queue;
+
+    dict_queue = Queue();
+    newdict = {"key": "keyname", "value": "value body"};
+    dict_queue.put(newdict);
+    queue_size = dict_queue.qsize();
+    dict_item = dict_queue.get();
+
+- 根据文件包名，加载python文件。 ::
+
+    source_module = __import__("plog.source.%s" % source_module_name,fromlist=["plog.source"]);
+    # 使用加载后的结果。source是其内部的class
+    source_iter = source_module.source(source_dict=conf_dict["source"]).yield_line()
+
+- 读取文件的多行 ::
+
+    file = open("filepath");
+
+    while 1:
+        line_list = file.readlines();
+
+        if not line_list:
+            break;
+
+  其中 ``readlines`` 并非一次性将文件的所有内容都读出来。而是更具系统缓存的大小一次次往外读。
+
+常用的第三方模块
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- 信号模块： ``signal``
+- 命令行解析模块： ``optparse``
+
 一个持久话的module是shelve。
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ::

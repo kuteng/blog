@@ -6,7 +6,34 @@
 
 本周任务
 ^^^^^^^^^^^^
+2018-05-15
+
+- 今天因为良庆请假，徐进在站会上准备将拉取的任务临时交给我负责。不过我拒绝了，原因如下：
+
+  - 我希望专心与ES模块的工作，将ES模块整理干净，此外还有语言探测的任务。我不希望回到年前的状态，将自己作为一个救火队员，忙于救火。
+  - 拉取模块的任务需要为其两周。而我过去属于义务帮忙性质，这其中，没有问题是应该，出了问题是我的能力不足。同时如果这段时间中，ES以前 `TODO` 的事情爆发了其中一件，因为我的精力被牵扯，导致事情无法在一天内被解决，会让团队怀疑我的能力。
+  - 过年之后，拉取模块的主导权被无声无息的转移了徐进手上了，而此前或事中，无人与我通过气。对于这一点，虽然我没有表现出来，但实际上是很有怨言的。以为对我而言，“代码就是我的领域”，对于这种侵犯行为，我是很敏感的（这样的主权意识，会让程序员对代码更有主人翁的责任感）。
+  - 关于拉取模块重新由我负责这件事情，徐进会前并没有与我商议。这样的决定直接在会上进行宣布，没有事前征求我的意见，我们小组要向一言堂发展吗？——会前商议决定，会上宣布，我觉得对于大部分事情，都是很好的解决方法。
+  - 我很清楚，就算没有后面的两点，就算这件事情是石头哥主导的，我也不会同意。当然，如果没有前面两点，我是否会同意这件事情，是否会闹脾气，我也无法肯定。或许那时候理想的方式是让这件事情 `困难` 的达成，同时乘机将我一直以来的 `意见` 与徐进沟通，这是一个很理智的解决方案。
+
+- 直接使用 ``ydcv`` 可以进入翻译模式，而使用 ``\q`` 可以推出翻译模式。
+
+
 2018-05-10
+
+- TODO: ES索引，记录成功删除数据的个数。新增数据的个数。
+- TODO: 通过官方文档（英文），了解ES导入数据，所有的反馈情况。包含create/update/delete等。
+- ES的返回结果：包含创建和更新 ::
+
+    {"took":16,"errors":false,"items":[{"index":{"_index":"creatives","_type":"creative","_id":"ads_803624","_version":5,"result":"created","_shards":{"total":2,"successful":2,"failed":0},"created":true,"status":201}},{"index":{"_index":"ecommerce_creatives","_type":"creative","_id":"ads_803624","_version":3,"result":"updated","_shards":{"total":2,"successful":2,"failed":0},"created":false,"status":200}}]}
+
+  包含删除： ::
+
+    {"took":22283,"errors":false,"items":[{"delete":{"found":true,"_index":"creatives","_type":"creative","_id":"ads_803624","_version":7,"result":"deleted","_shards":{"total":2,"successful":2,"failed":0},"status":200}},{"delete":{"found":true,"_index":"ecommerce_creatives","_type":"creative","_id":"ads_803624","_version":5,"result":"deleted","_shards":{"total":2,"successful":2,"failed":0},"status":200}}]}
+
+    {"took":137,"errors":false,"items":[{"delete":{"found":false,"_index":"creatives","_type":"creative","_id":"ads_803624","_version":1,"result":"not_found","_shards":{"total":2,"successful":2,"failed":0},"status":404}},{"delete":{"found":false,"_index":"ecommerce_creatives","_type":"creative","_id":"ads_803624","_version":1,"result":"not_found","_shards":{"total":2,"successful":2,"failed":0},"status":404}}]}
+
+2018-05-09
 
 - TODO: 索引中所有ID为空数据都删除。
 - TODO: 索引中所有tableName为空的数据都删除。
@@ -15,7 +42,7 @@
 - TODO: 北京和美国的ES，creatives索引的结构中tableName的type不一致。
 - 软件开发大约有20%关乎工程。另外80%关乎其他因素，包括与人类的巧妙互动和对问题空间的定性研究。请一定密切关注工程以外的机会与风险
 
-2018-05-09
+2018-05-08
 
 - 学习：石头哥通过观察语言探测不精确的几个Case，发现因为URL部分，会影响语言探测的精度。
 - 关于语言探测的优化，石头哥只通知了徐进。我不舒服了。

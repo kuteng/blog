@@ -6,6 +6,12 @@ MySql备忘
 
 常用命令
 ^^^^^^^^^^^^^^^
+修改数据
+########################
+::
+
+    UPDATE table_name SET field1=new-value1, field2=new-value2 [WHERE Clause]
+
 重置主键：
 #########################
 ::
