@@ -84,6 +84,23 @@ ES运维
 ^^^^^^^^^^^^^^^^
 - ``[URL]:9200/_cat/nodes?help`` 查询节点状况
 - ``[URL]:9200/_cat/nodes?v&h=id,pid,ip,host,disk.avail' && echo`` 查询磁盘可用空间大小
+  ``[URL]:9200/_cat/nodes?v&h=ip,host,name,heap.current,heap.percent,heap.max,ram.max,disk.avail,node.role,master``
+  结果： ::
+
+    ip      name    heap.current heap.percent heap.max ram.max disk.avail node.role master
+    x.x.x.x 2oElS91        3.4gb           43    7.9gb  15.6gb     57.1gb mdi       *
+    x.x.x.x XaJf4Q0        1.2gb           15    7.9gb  15.6gb    221.2gb mdi       -
+    x.x.x.x OQomrEd        1.1gb           13    7.9gb  15.6gb    229.6gb mdi       -
+    x.x.x.x cFyDpHM        3.9gb           49    7.9gb  15.6gb    128.2gb mdi       -
+
+- ``[URL]:9200/_cat/allocation?v`` 监控分配情况，其中也有磁盘大小和磁盘可用空间等信息 ::
+
+    shards disk.indices disk.used disk.avail disk.total disk.percent host    ip      node
+        30         44gb      52gb    105.2gb    157.3gb           33 x.x.x.x x.x.x.x cFyDpHM
+        66         99gb   107.1gb     50.2gb    157.3gb           68 x.x.x.x x.x.x.x 2oElS91
+        37       55.7gb    71.8gb    242.9gb    314.8gb           22 x.x.x.x x.x.x.x OQomrEd
+        29       63.4gb    79.5gb    235.3gb    314.8gb           25 x.x.x.x x.x.x.x XaJf4Q0
+
 - ``curl '[URL]:9200/_cat/indices?v'`` 在命令行查看所有索引。
 - ``curl '[URL]:9200/_cat/indices?v' | grep ' \.' && echo`` 查看名称以"."开头的索引的信息。
 
