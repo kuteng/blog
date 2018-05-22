@@ -2,9 +2,9 @@ Ubuntu
 ===================================
 异常解决
 ^^^^^^^^^^^^^^^^^^^^^^^
-- `error: cannot install "git-todos": snap "git-todos" has "install-snap" change in progress` 使用命令 `sudo snap install git-todos` 解决方案。
+- ``error: cannot install "git-todos": snap "git-todos" has "install-snap" change in progress`` 使用命令 ``sudo snap install git-todos`` 解决方案。
 
-  - 使用命令 `snap changes` 中到上面报错的安装任务，已知的情况是 `它的状态是Doing` ，如下 ::
+  - 使用命令 ``snap changes`` 中到上面报错的安装任务，已知的情况是 `它的状态是Doing` ，如下 ::
 
       ID   Status  Spawn                 Ready                 Summary
       7    Done    2018-05-21T16:27:31Z  2018-05-21T16:27:50Z  Install "shadowsocks" snap
