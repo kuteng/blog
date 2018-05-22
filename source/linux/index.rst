@@ -8,6 +8,7 @@ linux的用法笔记
    vim
    shell
    archlinux
+   ubuntu
    mysql
    git
    tools

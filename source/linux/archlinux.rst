@@ -135,31 +135,31 @@ ArchLinux
 
         sed -n "5,9p" peter.note
 
-#. 对数据结果进行统计<br/>
+#.  对数据结果进行统计<br/>
     wc命令：统计指定文件中的字节数、字数、行数，并将统计结果显示输出。
     例如：统计ps结果的行数::
 
         ps -aux "sync/" | wc -l
 
-#. 使用更简洁的搜索文件命令：::
+#.  使用更简洁的搜索文件命令：::
 
         mlocate
 
-#. xfce4的锁屏命令::
+#.  xfce4的锁屏命令::
 
         xflock4
 
-#. 启动VNC服务的命令：::
+#.  启动VNC服务的命令：::
 
         vncserver
 
-#. 更新mirrorlist的命令::
+#.  更新mirrorlist的命令::
 
         sudo reflector --latest 100 --protocol http --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
-#. 启动Vnc: ``systemctl start x11vnc``
+#.  启动Vnc: ``systemctl start x11vnc``
 
-#. linux系统监控的命令
+#.  linux系统监控的命令
 
     -   top
     -   vmstat：虚拟内存统计
@@ -174,6 +174,10 @@ ArchLinux
     -   netstat：linux网络统计监控系统
     -   ss：网络统计
     -   iptraf：获取实时网络统计信息
+
+#.  为pacman增加代理。只需要编辑 `/etc/pacman.conf` ::
+
+        XferCommand = /usr/bin/curl --socks5 127.0.0.1:1080 -C - -f %u > %o
 
 名词摘录：
 ^^^^^^^^^^^^^
