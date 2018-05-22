@@ -20,4 +20,14 @@ Ubuntu
 
       sudo snap abort 14
 
+日常管理中，用到的命令
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- 自动切换python2和python3 ::
+
+    sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
+    sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
+
+  开始切换 ::
+
+    sudo update-alternatives --config python
 
