@@ -124,7 +124,8 @@ MySql备忘
 -   重启mysql服务，这时的mysql不需要密码即可登录数据库
 -   然后进入mysql: ::
 
-        use mysql;update user set password=password('新密码') where user='root';
+        use mysql;
+        update user set password=password('新密码') where user='root';
         flush privileges
 
 性能优化语句：
