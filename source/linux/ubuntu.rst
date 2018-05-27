@@ -31,3 +31,49 @@ Ubuntu
 
     sudo update-alternatives --config python
 
+- 增加swap分区
+
+  查看系统是否有交换分区 ::
+
+    sudo swapon --show
+    free -h
+
+  使用 ``fallocate`` 命令创建一个交换文件 ::
+
+    sudo fallocate -l 1G /swapfile
+
+  锁定文件的root权限，防止普通用户能够访问这个文件，造成重大安全隐患 ::
+
+    sudo chmod 600 /swapfile
+
+  通过以下命令将文件标记为交换空间 ::
+
+    sudo mkswap /swapfile
+
+  启用该交换文件，让我们的系统开始使用它 ::
+
+    sudo swapon /swapfile
+
+  验证交换空间是否可用 ::
+
+    sudo swapon --show
+    free -h
+
+  永久保留交换文件 ::
+
+    # 备份/etc/fstab文件以防出错
+    sudo cp /etc/fstab /etc/fstab.bak
+    # 将swap文件信息添加到/etc/fstab文件的末尾：
+    echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+  查看当前的swappiness值（默认是60） ::
+
+    cat /proc/sys/vm/swappiness
+
+  设置swappiness的值 ::
+
+    sudo sysctl vm.swappiness=10
+
+  保证这个设置再下次启动中依然生效，我们可以在 ``/etc/sysctl.conf`` 文件中添加一行实现 ::
+
+    vm.swappiness=10
