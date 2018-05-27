@@ -1,5 +1,10 @@
-读书笔记
+Apache Flink
 =======================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: 视频教程:
+
 链接： http://flink-china.org/
 
 - 回顾一下数据仓库的概念。当前产品中是否可以触及这个概念？
@@ -20,4 +25,4 @@ Flink的应用场景。
 英语
 ^^^^^^^^^^^^^^^^^^^
 - `For distributed execution, Flink chains operator subtasks together into tasks.`
-- `Chaining operators together into tasks is a useful optimization: it reduces the overhead of thread-to-thread handover and buffering, and increases overall throughput while decreasing latency. `
+- `Chaining operators together into tasks is a useful optimization: it reduces the overhead of thread-to-thread handover and buffering, and increases overall throughput while decreasing latency.`
