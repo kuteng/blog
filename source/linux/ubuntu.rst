@@ -118,3 +118,95 @@ Ubuntu
 
     sudo update-grub
 
+  或者这样做：
+
+  运行命令： ::
+
+    # Loads /etc/cgconfig.conf
+    cgconfigparser -l /etc/cgconfig.conf
+    # Loads /etc/cgrules.conf
+    cgrulesengd -vvv --logfile=/var/log/cgrulesengd.log
+
+  然后，给自己写了一个init脚本，在系统启动时加载上面的两个文件。下面的内容存放在文件 `/etc/init.d/cgconf` 中 ::
+
+    #!/bin/sh
+    ### BEGIN INIT INFO
+    # Provides:          cgconf
+    # Required-Start:    $remote_fs $syslog
+    # Required-Stop:     $remote_fs $syslog
+    # Should-Start:
+    # Should-Stop:
+    # Default-Start:     2 3 4 5
+    # Default-Stop:      0 1 6
+    # Short-Description: Configures CGroups
+    ### END INIT INFO
+
+    start_service() {
+      if is_running; then
+        echo "cgrulesengd is running already!"
+        return 1
+      else
+        echo "Processing /etc/cgconfig.conf..."
+        cgconfigparser -l /etc/cgconfig.conf
+        echo "Processing /etc/cgrules.conf..."
+        cgrulesengd -vvv --logfile=/var/log/cgrulesengd.log
+        return 0
+      fi
+    }
+
+    stop_service() {
+      if is_running; then
+        echo "Stopping cgrulesengd..."
+        pkill cgrulesengd
+      else
+        echo "cgrulesengd is not running!"
+        return 1
+      fi
+    }
+
+    status() {
+      if pgrep cgrulesengd > /dev/null; then
+        echo "cgrulesengd is running"
+        return 0
+      else
+        echo "cgrulesengd is not running!"
+        return 3
+      fi
+    }
+
+    is_running() {
+      status >/dev/null 2>&1
+    }
+
+    case "${1:-}" in
+      start)
+        start_service
+        ;;
+      stop)
+        stop_service
+        ;;
+      status)
+        status
+        ;;
+      *)
+        echo "Usage: /etc/init.d/cgconf {start|stop|restart|status}"
+        exit 2
+        ;;
+    esac
+
+    exit $?
+
+  运行如下命令 ::
+
+    # make the script executable
+    chmod 755 /etc/init.d/cgconf
+
+    # register the service
+    update-rc.d cgconf defaults
+
+    # start the service
+    service cgconf start
+
+    # check the status
+    service cgconf status
+
