@@ -77,3 +77,44 @@ Ubuntu
   保证这个设置再下次启动中依然生效，我们可以在 ``/etc/sysctl.conf`` 文件中添加一行实现 ::
 
     vm.swappiness=10
+
+- 限制chromium的CPU和内存。
+
+  安装 `cgroup-bin` 。
+
+  在文件 `/etc/cgconfig.conf` 加入如下代码： ::
+
+    group browsers {
+        cpu {
+    #       Set the relative share of CPU resources equal to 25%
+            cpu.shares = "256";
+        }
+        memory {
+    #       Allocate at most 1 GB of memory to tasks
+            memory.limit_in_bytes = "1G";
+    #       Apply a soft limit of 512 MB to tasks
+            memory.soft_limit_in_bytes = "768M";
+        }
+    }
+
+  再在文件 `/etc/cgrules.conf` 中添加如下代码，注意 ``jojeda`` 是用户名。 ::
+
+    # user:process                                          subsystems      group
+    jojeda:/usr/lib/chromium-browser/chromium-browser       cpu,memory      browsers
+
+  重启 `cgconfig` 服务 ::
+
+    sudo service cgconfig restart
+
+  如果报 ::
+
+    Failed to start cgconfig.service: Unit cgconfig.service not found.
+
+  你或许还需要修改文件 `/etc/default/grub` 中的 `GRUB_CMDLINE_LINUX_DEFAULT` ::
+
+    GRUB_CMDLINE_LINUX_DEFAULT="cgroup_enable=memory swapaccount=1"
+
+  在手动更新它 ::
+
+    sudo update-grub
+
