@@ -7,6 +7,7 @@ linux的用法笔记
 
    vim
    shell
+   linux
    archlinux
    ubuntu
    mysql
