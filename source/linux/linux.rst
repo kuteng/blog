@@ -1,5 +1,10 @@
 Linux
 ===================================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+
 常用命令
 ^^^^^^^^^^^^^^^^^^^^^
 - 查看内存信息
@@ -29,8 +34,7 @@ Linux
 
   查看内存的频率 ::
 
-    sudo dmidecode | grep -A16 "MemoryDevice"
-    sudo dmidecode | grep -A16 "MemoryDevice" | grep'Speed'
+    sudo dmidecode | grep -P -A16 "Memory\s+Device" | grep 'Speed'
 
   结果 ::
 
@@ -42,3 +46,14 @@ Linux
     Speed:667MHz(1.5ns)  
     Speed:667MHz(1.5ns)  
     Speed:667MHz(1.5ns)  
+
+- 修改用户密码
+
+  修改用户自己的密码： ::
+
+    passwd
+
+  修改其他用户的密码： ::
+
+    passwd othername
+

@@ -16,7 +16,9 @@ Apache Flink
 - `有状态操作` 部分的内容我没有看清楚。
 - `容错检查点` 部分的内容我没有看清楚。
 - `Distributed Runtime Environment` 部分的内容，实际上我并没有看懂。
-- `window` 在这里是什么意思？
+- `window` (窗口）在这里是什么意思？
+  - 聚合事件（比如计数、求和）在流上的工作方式与批处理不同。流上的聚合需要由 `窗口` 来划定范围，比如 “计算过去的5分钟” ，或者 “最后100个元素的和” 。
+  - 窗口可以是 事件驱动的 （比如：每30秒）或者 数据驱动的 （比如：每100个元素）。窗口通常被区分为不同的类型，比如 滚动窗口 （没有重叠）， 滑动窗口 （有重叠），以及 会话窗口 （由不活动的间隙所打断）
 
 Flink的应用场景。
 ^^^^^^^^^^^^^^^^^^^^
@@ -40,3 +42,13 @@ Flink的应用场景。
 - `Programs written in the Data Stream API can resume execution from a savepoint. Savepoints allow both updating your programs and your Flink cluster without losing any state.`
 - `They rely on the regular checkpointing mechanism for this. During execution programs are periodically snapshotted on the worker nodes and produce checkpoints. For recovery only the last completed checkpoint is needed and older checkpoints can be safely discarded as soon as a new one is completed.`
 - `Savepoints are similar to these periodic checkpoints except that they are triggered by the user and don’t automatically expire when newer checkpoints are completed.`
+
+操作备忘
+^^^^^^^^^^^^^^^^^^^^^^^^
+- 启动任务 ::
+  
+    ./bin/start-cluster.sh
+
+- 监控网址 ::
+
+    http://localhost:8081
