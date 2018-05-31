@@ -22,3 +22,19 @@ Apache Flink
   修改文件 `conf/masters` 将 ``localhost:8081`` 改为 ``0.0.0.0:8081``
 
   修改文件 `conf/flink-conf.yaml` 将 ``jobmanager.rpc.address: localhost`` 改为 ``jobmanager.rpc.address: 0.0.0.0`` （这个改动似乎没有必要）
+
+测试文件
+^^^^^^^^^^^^^^^^^^^^^^^^
+- SocketWindowWordCount.jar
+
+  监控端口，统计5s内输入文本的单词个数。
+
+- WordCount.jar
+- IncrementalLearning.jar
+- Iteration.jar
+- Kafka010Example.jar
+- SessionWindowing.jar
+- StateMachineExample.jar
+- TopSpeedWindowing.jar
+- Twitter.jar
+- WindowJoin.jar
