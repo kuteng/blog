@@ -23,6 +23,10 @@ Apache Flink
 
   修改文件 `conf/flink-conf.yaml` 将 ``jobmanager.rpc.address: localhost`` 改为 ``jobmanager.rpc.address: 0.0.0.0`` （这个改动似乎没有必要）
 
+- 提交Flink程序的方式 ::
+
+    ./bin/flink run examples/streaming/SocketWindowWordCount.jar --port 9000
+
 测试文件
 ^^^^^^^^^^^^^^^^^^^^^^^^
 - SocketWindowWordCount.jar
@@ -30,8 +34,14 @@ Apache Flink
   监控端口，统计5s内输入文本的单词个数。
 
 - WordCount.jar
-- IncrementalLearning.jar
+
+  统计文件的总的文本。
+
 - Iteration.jar
+
+  记住 `斐波那契数列` ，举例说明如何使用 `递归` ，更详细一些是： 教会你使用 `OutputSelector` ，这个东西可以将一次结算的结果作为 `源` ，重新放入到 `流` 中。
+
+- IncrementalLearning.jar
 - Kafka010Example.jar
 - SessionWindowing.jar
 - StateMachineExample.jar

@@ -22,6 +22,7 @@
     english
     apache2
     apache_flink
+    maven
 
 软技能
 ^^^^^^^^^^^^^^^^^^^
