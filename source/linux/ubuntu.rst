@@ -244,3 +244,15 @@ Ubuntu
      export LANG=zh_CN
 
   关闭终端,并重起.下次进入系统,系统会提示是否把转化好的目录改回中文.选择不再提示,并取消修改.主目录的中文转英文就完成了~
+
+- Ubuntu18中，搜狗输入法的“候选栏”乱码。解决方法：
+
+  搜索进程 ``/usr/bin/fcitx`` 的pid，并将其 ``kill`` 。 ::
+
+    ps -aux | grep fcitx
+    kill -9 [pid]
+
+  然后重启这个进程： ::
+
+    fcitx
+
