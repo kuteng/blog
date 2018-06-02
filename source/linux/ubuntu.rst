@@ -1,5 +1,10 @@
 Ubuntu
 ===================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
 异常解决
 ^^^^^^^^^^^^^^^^^^^^^^^
 - ``error: cannot install "git-todos": snap "git-todos" has "install-snap" change in progress`` 使用命令 ``sudo snap install git-todos`` 解决方案。
@@ -210,3 +215,32 @@ Ubuntu
     # check the status
     service cgconf status
 
+- ubuntu版的sublime-text3输入中文问题
+
+  借助工具：sublime-text-imfix
+
+  更新包 ::
+
+    sudo apt-get update && sudo apt-get upgrade
+
+  ``Clone`` 工具的git库 ::
+
+    git clone https://github.com/lyfeyaj/sublime-text-imfix.git
+
+  安装 ``sublime-text-imfix`` ::
+
+    cd sublime-text-imfix
+    ./sublime-imfix
+
+- Ubuntu /home下中文目录如何修改成英文？
+
+  命令 ::
+
+    export LANG=en_US
+    xdg-user-dirs-gtk-update
+
+  跳出对话框询问是否将目录转化为英文路径,同意并关闭. ::
+
+     export LANG=zh_CN
+
+  关闭终端,并重起.下次进入系统,系统会提示是否把转化好的目录改回中文.选择不再提示,并取消修改.主目录的中文转英文就完成了~

@@ -2,7 +2,7 @@ linux的用法笔记
 ======================================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 3
    :caption: Contents:
 
    vim
