@@ -256,3 +256,7 @@ Ubuntu
 
     fcitx
 
+- 查看所有服务状态： ::
+
+    service --status-all
+
