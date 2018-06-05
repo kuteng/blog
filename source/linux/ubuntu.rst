@@ -10,6 +10,7 @@ Ubuntu
 - ``sudo apt install taskwarrior taskd``
 - ``sudo apt install ^openjdk-8-*``
 - ``sudo apt install pip``
+- ``sudo apt install shutter``
 - ``sudo pip install ydcv``
 
 异常解决
@@ -31,6 +32,10 @@ Ubuntu
   - 终止掉这个任务，命令如下 ::
 
       sudo snap abort 14
+
+- `shutter` 工具的编辑功能被禁用。
+
+  - 下载 `libgoocanvas-common <https://launchpad.net/ubuntu/+archive/primary/+files/libgoocanvas-common_1.0.0-1_all.deb>`_, `libgoocanvas3 <https://launchpad.net/ubuntu/+archive/primary/+files/libgoocanvas3_1.0.0-1_amd64.deb>`_, `libgoo-canvas-perl <https://launchpad.net/ubuntu/+archive/primary/+files/libgoo-canvas-perl_0.06-2ubuntu3_amd64.deb>`_ ， 并安装。
 
 日常管理中，用到的命令
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
