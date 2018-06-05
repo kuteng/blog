@@ -47,6 +47,45 @@ Linux
     Speed:667MHz(1.5ns)  
     Speed:667MHz(1.5ns)  
 
+- 注册新用户
+
+  - 创建用户 ::
+
+      useradd testuser
+
+    注意：新创建用户会在 `/home` 下创建一个用户目录 `testuser`
+  - 修改密码 ::
+
+      paswd testuser
+
+  - 修改用户这个名利的相关参数 ::
+
+      usermod --help
+
+  - 删除用户 ::
+
+      userdel testuser
+
+  - 删除用户的主目录 ::
+
+      rm -rf /home/testuser
+
+  - 新建用户tab无法补全命令 
+
+    - 通过 ``cat /ect/passwd`` ，可知这个用户的shell是 ``/bin/sh``
+    - 修改为 ``/bin/bash`` 即可
+
+
+  - 赋予 `sudo` 权限：
+
+    编辑文件 ``/etc/sudoers`` ，添加一行 ::
+
+      test   ALL=(ALL:ALL) ALL
+
+    或者修改为这样应该也可以 ::
+
+      test   ALL=(root:root) ALL
+
 - 修改用户密码
 
   修改用户自己的密码： ::

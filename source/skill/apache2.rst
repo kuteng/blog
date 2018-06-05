@@ -31,6 +31,14 @@ Apache2 http server
             Require all denied
         </Directory>
 
+    如果要禁止访问某些子目录，可以在下面加入下面代码 ::
+
+        <Directory "/home/username/folder1/folder2/target_folder/subdirectory">
+            Order allow,deny
+            Deny from all
+        </Directory>
+
+
 -   在文件 `/etc/apache2/sites-available/000-default.conf` 中，合适位置增加如下代码 ::
 
         <VirtualHost *:8080>

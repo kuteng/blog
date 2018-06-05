@@ -5,6 +5,13 @@ Ubuntu
    :maxdepth: 2
    :caption: Contents:
 
+安装的软件
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- ``sudo apt install taskwarrior taskd``
+- ``sudo apt install ^openjdk-8-*``
+- ``sudo apt install pip``
+- ``sudo pip install ydcv``
+
 异常解决
 ^^^^^^^^^^^^^^^^^^^^^^^
 - ``error: cannot install "git-todos": snap "git-todos" has "install-snap" change in progress`` 使用命令 ``sudo snap install git-todos`` 解决方案。
