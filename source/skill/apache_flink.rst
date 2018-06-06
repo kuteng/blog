@@ -48,3 +48,12 @@ Apache Flink
 - TopSpeedWindowing.jar
 - Twitter.jar
 - WindowJoin.jar
+
+问题
+^^^^^^^^^^^^^^^^^^^^^^^^^
+- 很多时候在 ``Step`` (implements MapFunction) 中的log，没有打印到log文件中。这是为什么？
+
+  - 此问题是在文件 ``org.apache.flink.streaming.examples.iteration.IterateExample`` 中发现的。
+  - 此问题多出现在，jar任务第二次上传之后（完全不打印）；第一次上传运行的时候（只有部分打印）；对相关log文件clean数据之后（这个原因不太可能）。
+
+- 了解 `StreamExecutionEnvironment` 、 `DataStream` 、 `IterativeStream` 、 `SplitStream` 、 `inputStream` 、 `inputStream` 的工作机制？

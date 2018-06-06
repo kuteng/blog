@@ -5,9 +5,9 @@
    :maxdepth: 2
    :caption: Contents:
 
+   diary
    note
    task
-   diary
    docs
    viewpoint
    improve
