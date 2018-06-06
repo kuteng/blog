@@ -27,6 +27,22 @@ Apache Flink
 
     ./bin/flink run examples/streaming/SocketWindowWordCount.jar --port 9000
 
+- 借助Maven生成一个Flink项目 ::
+
+    mvn archetype:generate -DgroupId=peter.flink.test -DartifactId=test -DarchetypeGroupId=org.apache.flink -DarchetypeArtifactId=flink-quickstart-java -DarchetypeVersion=1.5.0
+
+API
+^^^^^^^^^^^^^^^^^^^^^^^^
+Stream与Batch
+########################
+- `Stream`
+
+  - `StreamingExecutionEnvironment` 、 `DataStream`
+
+- `Batch`
+
+  - `ExecutionEnvironment` 、 `DataSet`
+
 测试文件
 ^^^^^^^^^^^^^^^^^^^^^^^^
 - SocketWindowWordCount.jar
