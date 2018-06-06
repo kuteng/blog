@@ -27,6 +27,14 @@ Flink的应用场景。
 - 数据需要被快速处理
 - 数据体量大
 
+疑问点
+^^^^^^^^^^^^^^^^^^^^
+- 在 `DataSet and DataStream <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#dataset-and-datastream>`_ 中提及 ``DataSet`` 和 ``DataStream`` 是不可变的，无法之间add/remove数据，那么在“流”场景下，如何保证随着“流动”处理到新数据呢？
+- 在 `Lazy Evaluation <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#lazy-evaluation>`_ 中，这段话那我没有理解：
+  `The lazy evaluation lets you construct sophisticated programs that Flink executes as one holistically planned unit.`
+
+- ``In the following discussion we will use the DataStream API and keyBy. For the DataSet API you just have to replace by DataSet and groupBy.`` 是否意味着 ``DataStream`` 只能使用 ``keyBy`` 不能用 ``groupBy`` 、 ``DataSet`` 只能用 ``groupBy`` 不能用 ``keyBy`` 。例外我如何验证 ``keyBy`` 和 ``groupBy`` 的效果？另外， ``keyBy`` 的效果是否和 ``groupBy`` 的效果一样？如果一样，为什么取名不同呢？
+
 英语
 ^^^^^^^^^^^^^^^^^^^
 - `For distributed execution, Flink chains operator subtasks together into tasks.`

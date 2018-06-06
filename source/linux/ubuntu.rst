@@ -12,6 +12,7 @@ Ubuntu
 - ``sudo apt install pip``
 - ``sudo apt install shutter``
 - ``sudo pip install ydcv``
+- ``sudo pip install chromium-bsu chromium-ublock-origin chromium-lwn4chrome flashplugin-installer``
 
 异常解决
 ^^^^^^^^^^^^^^^^^^^^^^^
