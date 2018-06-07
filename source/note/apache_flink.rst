@@ -34,6 +34,7 @@ Flink的应用场景。
   `The lazy evaluation lets you construct sophisticated programs that Flink executes as one holistically planned unit.`
 
 - ``In the following discussion we will use the DataStream API and keyBy. For the DataSet API you just have to replace by DataSet and groupBy.`` 是否意味着 ``DataStream`` 只能使用 ``keyBy`` 不能用 ``groupBy`` 、 ``DataSet`` 只能用 ``groupBy`` 不能用 ``keyBy`` 。例外我如何验证 ``keyBy`` 和 ``groupBy`` 的效果？另外， ``keyBy`` 的效果是否和 ``groupBy`` 的效果一样？如果一样，为什么取名不同呢？
+- 在 ``StreamJob`` 中， ``print()`` 方法之后需要跟 ``env.execute("...")`` 。但是在 ``BatchJob`` 中这样做会报错。这一点确定吗？为什么？
 
 英语
 ^^^^^^^^^^^^^^^^^^^
