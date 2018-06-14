@@ -126,21 +126,21 @@ transformation的常用类型
 
   - Regular Classes
 
-    这是指 `Java` 或 `Scala` API中的常规类。不过这部分的内容我没有完全理解。这里是 `链接 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#general-class-types>`_
+    这是指 `Java` 或 `Scala` API中的常规类。不过这部分的内容我没有完全理解。这里是 `链接01 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#general-class-types>`_
 
   - Values
 
-    这部分其实我也没有懂。 `链接 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#values>`_
+    这部分其实我也没有懂。 `链接02 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#values>`_
 
   - Hadoop Writables
 
-    这部分其实我也没有懂。 `链接 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#hadoop-writables>`_
+    这部分其实我也没有懂。 `链接03 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#hadoop-writables>`_
 
   - Special Types
 
-    这部分其实我也没有懂。 `链接 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#special-types>`_
+    这部分其实我也没有懂。 `链接04 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#special-types>`_
 
-  - 这里还有一部分： `链接 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#type-erasure--type-inference>`_
+  - 这里还有一部分： `链接05 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#type-erasure--type-inference>`_
 
 
 - ``Tuples`` 调用内容的方式有： 
@@ -148,7 +148,7 @@ transformation的常用类型
   - tuple.f4
   - tuple.getField(int position)
 
-- 累加器(``Accumulator``)在你调试程序或者想了解更多内部数据的时候非常有用。 `更多细节 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#accumulators--counters>`_
+- 累加器(``Accumulator``)在你调试程序或者想了解更多内部数据的时候非常有用。 `更多细节01 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/api_concepts.html#accumulators--counters>`_
 
   - ``IntCounter``, ``LongCounter`` and ``DoubleCounter``
   - ``Histogram``, 我特别渴望了解它的内部。(TODO)
@@ -163,7 +163,7 @@ transformation的常用类型
 
    这里的 ``open`` 方法在 `API <https://ci.apache.org/projects/flink/flink-docs-release-1.5/api/java/org/apache/flink/api/common/functions/AbstractRichFunction.html#open-org.apache.flink.configuration.Configuration->`_ 中有更加“落地”的实现。我可以去参考一下。(TODO)
 
-   同时 ``getRuntimeContext`` 的 `更多细节 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/api/java/org/apache/flink/api/common/functions/AbstractRichFunction.html#getRuntimeContext-->`_ ，我也想了解一下。(TODO)
+   同时 ``getRuntimeContext`` 的 `更多细节02 <https://ci.apache.org/projects/flink/flink-docs-release-1.5/api/java/org/apache/flink/api/common/functions/AbstractRichFunction.html#getRuntimeContext-->`_ ，我也想了解一下。(TODO)
 
 测试文件
 ^^^^^^^^^^^^^^^^^^^^^^^^
