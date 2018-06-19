@@ -49,6 +49,11 @@ transformation的常用类型
 - ``filter(FilterFunction<T>)``
 - ``flatMap(FlatMapFunction<T,R>)``
 
+Data Sources
+##############################
+- 对于file-source，读文件分为 `monitor` 和 `reader` ，前者单线程，后者多线程。
+- `File-based` 、 `Socket-based` 、 `Collection-based` 、 `Custom` 。
+
 备忘
 ^^^^^^^^^^^^^^^^^^^^^^^^
 - 使用 ``FlatMapFunction`` 时需要注意，类里面的两个“泛型”，分别对应输入数据的格式和输出数据的格式。
@@ -195,3 +200,4 @@ transformation的常用类型
   - 此问题多出现在，jar任务第二次上传之后（完全不打印）；第一次上传运行的时候（只有部分打印）；对相关log文件clean数据之后（这个原因不太可能）。
 
 - 了解 `StreamExecutionEnvironment` 、 `DataStream` 、 `IterativeStream` 、 `SplitStream` 、 `inputStream` 、 `inputStream` 的工作机制？
+- ``ParallelSourceFunction``, ``SourceFunction`` 以及 ``RichParallelSourceFunction`` 区别？这里说到的 ``并行`` 是指什么？多线程吗？
