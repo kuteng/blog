@@ -124,7 +124,20 @@ Maven
   - system：从参与度来说，和provided相同，不过被依赖项不会从maven仓库下载，而是从本地文件系统拿。需要添加systemPath的属性来定义路径
 
 - 运行jar文件的方法之一： ``java -cp target/NumberGenerator-1.0-SNAPSHOT.jar com.yiibai.App`` ，其中 ``com.yiibai.App`` 是个类。
+- 设置国内中央仓库。（以aliyun仓库为例：http://maven.aliyun.com/nexus/content/groups/public/）。
+
+  将 `/usr/share/maven/conf/settings.xml` 复制到 `~/.m2/settings.xml` 。然后修改文件： ::
+
+    <mirrors>
+      <mirror>
+        <id>alimaven</id>
+        <mirrorOf>central</mirrorOf>
+        <name>Aliyun Maven</name>
+        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+      </mirror>
+    </mirrors>
 
 问题
 ^^^^^^^^^^^^^^^^^^^^^^^
 - 如何在 `mvn package` 时，为生成的 `jar` 文件
+- 运行 ``mvn archetype:generate`` 报错 `No plugin found for prefix 'archetype' in the current project and in the plugin groups [org.apache.maven.plugins, org.codehaus.mojo] available from the repositories [local (/home/peter/.m2/repository), central (https://repo.maven.apache.org/maven2)]` ，即使我启用代理也没有解决问题。最后的解决方法是将 `中央仓库` 改为阿里云的仓库。
