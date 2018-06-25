@@ -21,12 +21,12 @@ Apache Flink
   - 聚合事件（比如计数、求和）在流上的工作方式与批处理不同。流上的聚合需要由 `窗口` 来划定范围，比如 “计算过去的5分钟” ，或者 “最后100个元素的和” 。
   - 窗口可以是 事件驱动的 （比如：每30秒）或者 数据驱动的 （比如：每100个元素）。窗口通常被区分为不同的类型，比如 滚动窗口 （没有重叠）， 滑动窗口 （有重叠），以及 会话窗口 （由不活动的间隙所打断）
 
-- 数据流模型的资料：
-
-  - `Dataflow Model <https://www.oreilly.com/ideas/the-world-beyond-batch-streaming-101>`_
-  - `The Dataflow Model paper <https://research.google.com/pubs/archive/43864.pdf>`_
-
 `Event Time <https://ci.apache.org/projects/flink/flink-docs-release-1.5/dev/event_time.html>`_
+  - 数据流模型的资料：
+  
+    - `Dataflow Model <https://www.oreilly.com/ideas/the-world-beyond-batch-streaming-101>`_
+    - `The Dataflow Model paper <https://research.google.com/pubs/archive/43864.pdf>`_
+
   - `Watermarks` 的作用：表示流中所有 `Event Time` < `Watermarks Time` 的元素，都已经传输过来了。
   - `Note that the Kafka source supports per-partition watermarking, which you can read more about here.`
 
