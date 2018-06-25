@@ -6,6 +6,13 @@
 
 本周任务
 ^^^^^^^^^^^^
+2018-06-25
+
+- 似乎是因为 ``peewee`` 不支持异步读写数据库，所以引入了 ``peewee_async`` 。
+- `Elasticsearch - Logstash - Kibana` 与 `Elasticsearch - Filebeat - Kiban` 两种组合的区别。简单的浏览了一下 `Filebeat` 和 `Logstash` 的区别，似乎 `Filebeat` 更被推荐。
+- `如果你在使用 MySQL 或 MariaDB，不要用“utf8”编码，改用“utf8mb4”。 <https://mp.weixin.qq.com/s?__biz=MzIwMzg1ODcwMw==&mid=2247487968&idx=1&sn=2ff7b511f6727c7816ab02fc0e1c0361&chksm=96c9a780a1be2e961cd5e7c5e5ff32961cd2b6c1bac480f8f1c3f281e5bf1504fecebdd59d48#rd>`_
+- [TODO] 我要做个APP：炫耀自己的学习季度。-> 【扩展】小组讨论，依据我们各自的学习进度。
+
 2018-06-22
 
 - 磁盘报警，可以直接使用云服务。
