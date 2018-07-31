@@ -66,6 +66,7 @@
    :maxdepth: 1
 
    books/https_authoritative_guide
+   books/kafka_authoritative_guide
 
 其他书籍
 ^^^^^^^^^^^^^^^^^^^

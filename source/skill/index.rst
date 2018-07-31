@@ -9,6 +9,24 @@
 - Service Mesh
 - Spring Cloud
 
+感兴趣的技能
+^^^^^^^^^^^^^^^^^^
+- Apache Dubbo, Nacos
+- RocksDB
+- JNDI, LAMP
+- Web服务器和应用服务器的区别
+- OpenAI
+- CNN
+- Filebeat
+- Blink与Flink（Blink兼容Flink的API）
+- RocketMQ、Kifka
+- Apache Jackrabbit Oak: 内容资源库
+- Apache Solr: 先进的搜索服务器
+- Mesos, Kubernetes
+
+- 个人网站（博客）框架：WordPress、LAMP、Drupal
+
+
 掌握的技能
 ^^^^^^^^^^^^^^^^^^
 .. toctree::
@@ -21,6 +39,7 @@
     docker
     english
     apache2
+    apache_tomcat
     apache_flink
     maven
 

@@ -51,6 +51,7 @@ Flink的应用场景。
   - 为什么： `ingestion time programs cannot handle any out-of-order events or late data` ？
   - 在 `Time Window` 中， `Processing Time` 、 `Event Time` 、 `Ingesion Time` 有什么区别？
   - `How does the operator advancess its event time?`
+  - 关于 `Late Elements` 部分，没有懂。程序是舍弃这些 `Late Elements` ，还是包容它们？
 
 英语
 ^^^^^^^^^^^^^^^^^^^
@@ -80,3 +81,5 @@ Flink的应用场景。
 - `Watermarks are generated at, or directly after, source functions.`
 - `As the watermarks flow through the streaming program, they advance the event time at the operators where they arrive. Whenever an operator advances its event time, it generates a new watermark downstream for its successor operators.`
 - `Some operators consume multiple input streams; a union, for example, or operators following a keyBy(…) or partition(…) function. Such an operator’s current event time is the minimum of its input streams’ event times. As its input streams update their event times, so does the operator.`
+- `It is possible that certain elements will violate the watermark condition, meaning that even after the Watermark(t) has occurred, more elements with timestamp t’ <= t will occur. In fact, in many real world setups, certain elements can be arbitrarily delayed, making it impossible to specify a time by which all elements of a certain event timestamp will have occurred. Furthermore, even if the lateness can be bounded, delaying the watermarks by too much is often not desirable, because it causes too much delay in the evaluation of event time windows.
+  For this reason, streaming programs may explicitly expect some late elements. Late elements are elements that arrive after the system’s event time clock (as signaled by the watermarks) has already passed the time of the late element’s timestamp. See Allowed Lateness for more information on how to work with late elements in event time windows.`
