@@ -64,3 +64,7 @@ Shell
 
     source install.sh
 
+- `grep` 与 `find` 组合： ::
+
+    find -name "*.py" | xargs grep -rn "media_analysis"
+

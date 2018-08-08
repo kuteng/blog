@@ -6,11 +6,22 @@
 
 本周任务
 ^^^^^^^^^^^^
+2018-08-08
+
+- `inventory-insight` 起初只有“莽撞”的增量数据增加。后来又因为有增加了“数据修改”的可能性，所以又有了增量索引。然后就需要字段 `udpate_status` 和字段 `is_deleted` 。
+
+2018-08-03
+
+- supervisor
+- DataX: 阿里云，将数据库表转化为json导入ES
+
 2018-07-31
+
 - 前几天看到一篇讲MySQL utf8mb4编码的文章，之前一直没有踩过这个坑，刚开发机上验证了一下确实如此。MySQL对utf8编码的实现，是以3 byte存的，而不是标准的4 byte，所以编码用到4 byte长度的字符就全部无法存储，典型的，例如emoji。现象是存储emoji时会丢字符，其它符合3 byte存储的字符会保留。utf8mb4编码是对这个问题的修正版编码，是以4 byte存储的。大家在设计database和table结构时，涉及到不确定内容的存储，推荐都用utf8mb4编码。在database级别指定编码，创建table就不用管编码了，直接继承database的。栈溢出上的解释：https://stackoverflow.com/questions/30074492/what-is-the-difference-between-utf8mb4-and-utf8-charsets-in-mysql
 - 另外一个小细节，选择完encoding之后，也要注意collation，例如 utf8_general_ci 和 utf8_bin，xxx_general_ci是大小写不敏感的（Case-Insensitive），xxx_bin是大小写敏感（Binary）。所以用了general_ci之后，会发现同一列中查询一个"content"，有类似"content" "Content" "CONTENT"的内容被查出来；另外如果用unique key，会发现这一列中“johnny”和“Johnny”被认为是相同的字符串，无法同时存在。
 
 2018-07-30
+
 - 微博、今日头条占用资源多的原因是：查询数据库的时候没有使用limit，导致CPU居高不下。但是这是为什么，没有使用limit不是应该消耗内存嘛，怎么消耗起CPU来了？难道这与peewee的数据缓存有关，它直接将临时数据存放在磁盘上？
 
 2018-07-19
