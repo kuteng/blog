@@ -6,6 +6,16 @@
 
 本周任务
 ^^^^^^^^^^^^
+2018-08-15
+
+- `Apache Nutch`, `Apache Tika`, `Apache Solr`, `SolrCloud`, `Apache Lucene`
+- `Netty`
+
+2018-08-13
+
+- DataX开源框架中，增量索引使用的是 `update_at` 字段而非 `update_status` 字段。那么我们如今的增量索引，是否需要更新？以后出现类似的情况，是否需要进行一下尝试？
+- 手机软件的iid/device_id是在软件安装后，第一次打开时生成，并发送给服务器的。
+
 2018-08-08
 
 - `inventory-insight` 起初只有“莽撞”的增量数据增加。后来又因为有增加了“数据修改”的可能性，所以又有了增量索引。然后就需要字段 `udpate_status` 和字段 `is_deleted` 。
