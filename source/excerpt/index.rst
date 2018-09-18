@@ -67,6 +67,7 @@
 
    books/https_authoritative_guide
    books/kafka_authoritative_guide
+   books/mastering_hadoop
 
 其他书籍
 ^^^^^^^^^^^^^^^^^^^
