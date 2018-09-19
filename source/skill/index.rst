@@ -41,6 +41,7 @@
     apache2
     apache_tomcat
     apache_flink
+    apache_hadoop
     maven
 
 软技能
