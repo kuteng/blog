@@ -3,7 +3,6 @@ Apache Flink
 
 .. toctree::
    :maxdepth: 1
-   :caption: 视频教程:
 
 链接： http://flink-china.org/
 

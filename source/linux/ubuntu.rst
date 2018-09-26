@@ -273,3 +273,24 @@ Ubuntu
 
     service --status-all
 
+- 命令行向桌面发送通知： ::
+
+    notify-send 'Hello world!' 'This is an example notification.' --icon=dialog-information
+
+  控制弹窗提醒的持续时间（1秒钟）： ::
+
+    notify-send "Notification Title" "The message body is shown here"  --icon=dialog-information -t 1000
+
+  其他信息：
+
+  - xubuntu中，使用 **Xfce4-notifyd** 作为消息的常驻进程，它来接收消息并构造弹窗。
+
+- 在命令行部署定时任务（使用 **at** 命令）： ::
+
+    at now + 1 minutes -f .local/scripts/at/game-notify
+
+  此命令的含义是一分钟后执行文件 ``.local/scripts/at/game-notify`` 中的命令。
+
+  - 分钟： `minutes` ; 小时: `hour` ; 天: `days` ; 周: `weeks` 。
+  - 设定在固定的时间： ``at 10:30pm`` ； ``at 23:59 12/31/2018`` 。
+
