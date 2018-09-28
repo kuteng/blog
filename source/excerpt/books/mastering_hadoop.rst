@@ -55,3 +55,34 @@
 - **Hadoop** 中 **Map** 节点的 **数据本地化** 问题（locality problem），是什么东西？
 - **Map** 的结果数据，是先进入缓存，在写入磁盘的。
 - **Map** 的结果要先进行分区，为什么“分区”？分区的依据是什么？
+- **Combiner** 与 **Reducer** 的区别。
+  
+  - **Combiner** 的目的：主要是为了削减Mapper的输出从而减少网络带宽和Reducer之上的负载。
+  - **Combiner** 的输入和 **Reduce** 的完全一致，输出和 **Map** 的完全一致
+  - **Combiner** 的应用场景示例：
+
+    - 如果我们有10亿个数据，Mapper会生成10亿个键值对在网络间进行传输，但如果我们只是对数据求最大值，那么很明显的Mapper只需要输出它所知道的最大值即可。这样做不仅可以减轻网络压力，同样也可以大幅度提高程序效率；
+    - 使用专利中的国家一项来阐述数据倾斜这个定义。这样的数据远远不是一致性的或者说平衡分布的，由于大多数专利的国家都属于美国，这样不仅Mapper中的键值对、中间阶段(shuffle)的键值对等，大多数的键值对最终会聚集于一个单一的Reducer之上，压倒这个Reducer，从而大大降低程序的性能。
+
+  - **Combine** 操作类似于： ``opt(opt(1, 2, 3)`` , ``opt(4, 5, 6))`` 。如果opt为求和、求最大值的话，可以使用，但是如果是求中值的话，不适用。
+
+第三章
+
+- Pig的示例 ::
+
+    cc = load 'countrycodes.txt' using PigStorage(',') as (ccode:chararray, cname:chararray);
+    ccity = load 'worldcitiespop.txt' using PigStorage(',') as (ccode:chararray, cityName:chararray, cityFullName:chararray, region:int, population:long, lat:double, long:double);
+    filteredCcity = filter ccity by population is not null;
+    joinCountry = join cc by ccode, ccity by ccode;
+    generateRecords = foreach joinCountry generate cc::cname, ccity::cityName, ccity::population;
+    groupByCountry = group generateRecords by cname;
+    populationByCountry = foreach groupByCountry generate group, SUM(generateRecords.population);
+
+- 执行模式： **交互式模式** 、 **批处理模式** 、 **嵌入式模式**
+- 连接： **内连接** 、 **外连接** 、 **交叉连接** 、 **半连接** 、 **θ连接**  、 **模糊连接**
+
+  - **内连接** 是基于相等的连接键， **θ连接** 是使用不等式来连接的。
+- 数据类型： **int** 、 **long** 、 **float** 、 **double** 、 **chararray** 、 **bytearray** 、 **Map** 、 **Tuple** 、 **Bag**
+- 命令： **DESCRIBE** 、 **EXPLAIN** 、 **ILLUSTRATE** 
+- 操作符： **LOAD** 、 **FILTER** 、 **FOREACH** 、 **FLATTEN** 、 **嵌套FOREACH操作符**  、 **COGROUP**  、 **CROSS**
+  - 类SQL操作符： **LIMIT** 、 **ORDER** 、 **DISTINCT** 、 **join** 、 **GROUP**
