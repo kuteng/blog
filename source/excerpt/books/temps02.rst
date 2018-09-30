@@ -7,7 +7,7 @@
 
 书籍：《精通Hadoop》
 
-进度：61页 - 97页
+进度：61页 - 76页
 
 --------
 
@@ -72,13 +72,13 @@ Accumulator接口
   
   须实现抽象类 ``org.apache.pig.LoadFunc`` 。 重点方法： ``setLocation(String s, Job job)`` 、 ``getInputFormat()`` 、 ``prepareToRead(RecordReader recordReader, PigSplit pigSplit)`` 和 ``getNext()`` 。详见 `66页`
 
-  setLocation函数告知加载的路径，随后加载器（loader）将这个信息通知给InputFormat。setLocation方法可以被Pig多次调用。
+  ``setLocation`` 告知加载的路径，随后加载器（loader）将这个信息通知给 ``InputFormat`` 。 ``setLocation`` 方法可以被Pig多次调用。
 
-  prepareToRead方法得到InputFormat类的RecordReader对象。
+  ``prepareToRead`` 得到 ``InputFormat`` 类的 ``RecordReader`` 对象。
 
-  getNext方法中，可以用RecordReader来读取并解析记录。 getNext方法将记录解析成Pig的复合数据类型。
+  ``getNext`` 方法中，可以用 ``RecordReader`` 来读取并解析记录。 ``getNext`` 方法将记录解析成Pig的复合数据类型。
 
-  getInputFormat方法通过加载器将InputFormat类交给Pig。 Pig同样以Hadoop MapReduce作业的方式调用InputFormat。
+  ``getInputFormat`` 方法通过加载器将 ``InputFormat`` 类交给Pig。 Pig同样以Hadoop MapReduce作业的方式调用 ``InputFormat`` 。
 
 存储函数
   Pig脚本中的存储函数是用来处理数据（结果）持久化的。
