@@ -108,13 +108,14 @@ PIG操作符部分
 **嵌套FOREACH**
   又称为 **内FOREACH操作符** ，比如关系操作符可以应用在FOREACH操作符的每一条记录上。需要注意的是： `在嵌套的部分中，各种关系操作符被应用于分组bag` 。现在， Pig的嵌套FOREACH操作符支持 **LIMIT** 、 **ORDER** 、 **DISTINCT** 、 **CROSS** 、 **FOREACH** 及 **FILTER** 这些关系操作符。示例： ::
 
-    cc = load 'countrycodes.txt' using PigStorage(',') as (ccode:chararray, cname:chararray);
     ccity = load 'worldcitiespop.txt' using PigStorage(',') as (ccode:chararray, cityName:chararray, cityFullName:chararray, region:int, population:long, lat:double, long:double);
-
-    unionCountryCity = union cc, ccity;
-    unionOnSchemaCountryCity = union onschema cc, ccity;
-    describe unionCountryCity;
-    describe unionOnSchemaCountryCity;
+    groupCcityByCcode = group cCity by ccode;
+    cityWithHighestPopulation = foreach groupCcityByCcode {
+            citiesWithPopulation = filter cCity by (population is not null AND population > 0);
+            orderCitiesWithPopulation = order citiesWithPopulation by population desc;
+            topPopulousCity = limit orderCitiesWithPopulation 1;
+            generate flatten(topPopulousCity);
+        };
 
 **COGOUP**
   有点类似GROUP操作。它按键聚积n组输入的记录，而不是只针对一组。用法示例： ``groupedCity = cogroup cc by ccode, ccity by ccode;`` ，完整代码详见 `57页` 。但是我对于它的具体输出数据结构很疑惑。
