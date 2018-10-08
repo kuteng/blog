@@ -7,6 +7,10 @@
    temps02
    temps03
    temps04
+   temps05
+   temps06
+   temps07
+   temps08
 
 随笔（待整理）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
