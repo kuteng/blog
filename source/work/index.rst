@@ -5,9 +5,11 @@
    :maxdepth: 2
    :caption: Contents:
 
-   diary
-   note
    task
    docs
    viewpoint
    improve
+
+.. 隐藏的文档
+   diary
+   note

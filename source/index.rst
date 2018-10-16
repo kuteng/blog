@@ -10,13 +10,13 @@
    :maxdepth: 4
    :caption: Contents:
 
-   linux/index
    work/index
+   excerpt/index
+   note/index
+   linux/index
    skill/index
    task/index
    meno/index
-   excerpt/index
-   note/index
 
 
 
