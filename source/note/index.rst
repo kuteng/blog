@@ -12,6 +12,7 @@
    :caption: 读书笔记
 
    mastering_hadoop
+   mastering_java_concurrent
 
 .. toctree::
    :maxdepth: 1

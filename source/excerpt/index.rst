@@ -66,8 +66,9 @@
    :maxdepth: 1
 
    books/https_authoritative_guide
-   books/kafka_authoritative_guide
+   books/mastering_java_concurrent
    books/mastering_hadoop
+   books/kafka_authoritative_guide
 
 其他书籍
 ^^^^^^^^^^^^^^^^^^^

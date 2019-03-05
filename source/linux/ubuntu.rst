@@ -7,12 +7,14 @@ Ubuntu
 
 安装的软件
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-- ``sudo apt install taskwarrior taskd``
+- ``sudo apt install taskwarrior taskd timewarrior``
 - ``sudo apt install ^openjdk-8-*``
 - ``sudo apt install pip``
+- ``sudo apt install keepass2``
 - ``sudo apt install shutter``
 - ``sudo pip install ydcv``
 - ``sudo pip install chromium-bsu chromium-ublock-origin chromium-lwn4chrome flashplugin-installer``
+- ``sudo pip install hamster``
 
 异常解决
 ^^^^^^^^^^^^^^^^^^^^^^^
