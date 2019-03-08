@@ -2,7 +2,7 @@ linux的用法笔记
 ======================================
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
    :caption: Contents:
 
    vim
@@ -12,6 +12,7 @@ linux的用法笔记
    ubuntu
    mysql
    git
+   eclipse
    tools
    centos
 
@@ -21,5 +22,5 @@ linux的用法笔记
 
    skills/socks5_to_http
    skills/create_shortcut
-   skills/taskwarrior_server
+   skills/taskwarrior
    skills/ftp_limit_user

@@ -52,3 +52,5 @@ try-with-resources语句
 - `Java 9` 中新增加的功能 `JShell` ，可以去了解一下。同时 `Java 9` 中增加的其他特性有必要整体了解一下，如：模块系统、改进的javadoc、Stream API、多分辨率图像API。参考网页： http://www.runoob.com/java/java9-new-features.html 。
 - 源码阅读备忘： ``java.util.concurrent.LinkedBlockingQueue`` 的 ``take()`` 方法。
 - 备忘：“一个人”输入 ``Person`` 这个类，但是如何从XML文件中识别（解析）出“人的信息”，不属于 ``Person`` 类。因为被解析的XML的来源、格式可能是不同的，甚至根本不是XML文件。
+- Java并发中， ``Thread.currentThread().interrupted()`` 与 ``Thread.currentThread().isInterrupted()`` 在什么场景下会将其差异明显的体现出来？
+- ``org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration`` 查看这个类的源码，了解“Rest-Data”的工作原理。

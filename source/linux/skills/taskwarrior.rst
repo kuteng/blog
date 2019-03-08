@@ -1,6 +1,8 @@
-借助网络资源搭建共享taskwarrior server
+taskwarrior
 ==============================================
 
+借助网络资源搭建共享taskwarrior server
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 第一步：保证本机的task的版本为2.3.0以上。 ::
 
     task --version
@@ -42,3 +44,20 @@
 参考网页: `FreeCinc的公用Taskserver资源`_
 
 .. _FreeCinc的公用Taskserver资源: https://www.cnblogs.com/shoshana-kong/p/9066888.html
+
+Taskwarrior 与 Timewarrior 结合
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- Timewarrior 安装完成后，会有一个 `on-modify.timewarrior` 文件，它是用于将 Timewarrior 与 Taskwarrior 结合的。这个文件的位置可能在下面两个地方： ::
+
+    /usr/share/doc/timewarrior/ext/on-modify.timewarrior
+
+  或 ::
+
+    /usr/local/share/doc/timewarrior/ext/on-modify.timewarrior
+
+- 修改其权限： ::
+
+    chmod +x ~/.task/hooks/on-modify.timewarrior
+
+- 完成。此后 ``task start`` 、 ``task stop`` 等命令都会关联到 `Timewarrior` 。
+
