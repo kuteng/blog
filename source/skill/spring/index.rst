@@ -3,7 +3,9 @@ Spring技术备忘
 Spring Boot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 热部署
-  需要在pom.xml中加入此依赖： ::
+  需要在pom.xml中加入此依赖：
+
+  .. code-block:: xml
 
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -11,7 +13,9 @@ Spring Boot
         <scope>runtime</scope>
     </dependency>
 
-  如果还是不行，在加一个这个： ::
+  如果还是不行，在加一个这个：
+
+  .. code-block:: xml
 
     <optional>true</optional>
 
@@ -25,7 +29,9 @@ Spring MVC
     public String list(@RequestParam(name = "key", required = false, defaultValue = "value") String family, Model model)
 
 
-  示例代码： ::
+  示例代码：
+
+  .. code-block:: java
 
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
@@ -43,7 +49,9 @@ Spring MVC
         }
     }
 
-- MVC的映射（路由）配置。示例代码： ::
+- MVC的映射（路由）配置。示例代码：
+
+  .. code-block:: java
 
     import org.springframework.context.annotation.Configuration;
     import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -68,7 +76,9 @@ Spring MVC
 
 Spring Security
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-- MVC权限配置，示例： ::
+- MVC权限配置，示例：
+
+  .. code-block:: java
 
     import org.springframework.context.annotation.Bean;
     import org.springframework.context.annotation.Configuration;
@@ -126,19 +136,23 @@ Spring Security
 
 Srping JPA
 ^^^^^^^^^^^^^^^^^^^^^^^^
-- 以Derby为例，连接数据库。pom.xml的配置。 ::
+- 以Derby为例，连接数据库。pom.xml的配置。
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+  .. code-block:: xml
 
-  applications.properties中的配置。 ::
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.derby</groupId>
+        <artifactId>derby</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+
+  applications.properties中的配置。
+
+  .. code-block:: properties
 
     dbBaseDir=/home/username/derbydb_file_system_path
     spring.jpa.hibernate.ddl-auto=update
@@ -147,7 +161,9 @@ Srping JPA
 
   注意： ``spring.datasource.username`` 需要填写，因为新建的derby数据库没有 ``SA`` 用户。
 
-- 创建Bean实体。示例如下： ::
+- 创建Bean实体。示例如下：
+
+  .. code-block:: java
 
     import java.util.Date;
     import java.util.List;
@@ -203,7 +219,9 @@ Srping JPA
 
   注解 ``@GeneratedValue`` 标记属性ID为自增长属性。
 
-- 借助接口 ``PagingAndSortingRepository`` 创建实体类的 `库` ，因为实现了接口 ``PagingAndSortingRepository`` 所以执行分页与排序。有因为使用了 ``@RepositoryRestResource`` 所以可以直接通过 `REST` 操作此类型的示例（增删改查）。代码如下： ::
+- 借助接口 ``PagingAndSortingRepository`` 创建实体类的 `库` ，因为实现了接口 ``PagingAndSortingRepository`` 所以执行分页与排序。有因为使用了 ``@RepositoryRestResource`` 所以可以直接通过 `REST` 操作此类型的示例（增删改查）。代码如下：
+
+  .. code-block:: java
 
     import java.util.List;
 
