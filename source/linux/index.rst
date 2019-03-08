@@ -3,21 +3,14 @@ linux的用法笔记
 
 .. toctree::
    :maxdepth: 1
-   :caption: Contents:
+   :caption: 分类
 
-   vim
-   shell
    linux
-   archlinux
-   ubuntu
-   mysql
-   git
-   eclipse
+   various_system
    tools
-   centos
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
    :caption: 一些技巧
 
    skills/socks5_to_http

@@ -29,11 +29,12 @@
    task/index
    meno/index
 
+这里是闫冬的博客，那么该记录些什么呢？
 
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. Indices and tables
+.. ==================
+.. 
+.. * :ref:`genindex`
+.. * :ref:`modindex`
+.. * :ref:`search`

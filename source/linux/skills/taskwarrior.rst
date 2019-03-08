@@ -1,6 +1,19 @@
 taskwarrior
 ==============================================
 
+命令备忘
+^^^^^^^^^^^^^^^^^^^^^
+常用命令：::
+
+    task add "ES-深入搜索-近似匹配" due:tomorrow proj:work pri:H +es depends:3
+    task [ID] modify due:3day
+    task [ID] modify desc:《教程》-深入搜索-近似匹配
+
+    task [ID] start 激活任务
+    task active 查看激活的任务。
+    task [ID] done 将任务设置为完成。
+    task completed 查看已经完成的任务。
+
 借助网络资源搭建共享taskwarrior server
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 第一步：保证本机的task的版本为2.3.0以上。 ::

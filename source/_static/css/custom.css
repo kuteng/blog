@@ -1,0 +1,9 @@
+div.wy-nav-content {
+    min-width: 500px;
+    max-width: 1200px;
+    width: 70%;
+}
+
+div.document {
+    min-height: 500px;
+}

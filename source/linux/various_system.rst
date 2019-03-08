@@ -1,11 +1,124 @@
+各种操作系统
+===================================
+
+Ubuntu
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+安装的软件
+:::::::::::::::::::::::::::::
+- ``sudo apt install taskwarrior taskd timewarrior``
+- ``sudo apt install ^openjdk-8-*``
+- ``sudo apt install pip``
+- ``sudo apt install keepass2``
+- ``sudo apt install shutter``
+- ``sudo pip install ydcv``
+- ``sudo pip install chromium-bsu chromium-ublock-origin chromium-lwn4chrome flashplugin-installer``
+- ``sudo pip install hamster``
+
+异常解决
+:::::::::::::::::::::::
+- ``error: cannot install "git-todos": snap "git-todos" has "install-snap" change in progress`` 使用命令 ``sudo snap install git-todos`` 解决方案。
+
+  - 使用命令 ``snap changes`` 中到上面报错的安装任务，已知的情况是 `它的状态是Doing` ，如下 ::
+
+      ID   Status  Spawn                 Ready                 Summary
+      7    Done    2018-05-21T16:27:31Z  2018-05-21T16:27:50Z  Install "shadowsocks" snap
+      8    Done    2018-05-21T16:37:11Z  2018-05-21T16:37:29Z  Install "ssocks" snap
+      9    Done    2018-05-21T17:09:06Z  2018-05-21T17:12:11Z  Install "intellij-idea-community" snap
+      10   Done    2018-05-21T17:09:18Z  2018-05-21T17:10:41Z  Install "tusk" snap
+      11   Done    2018-05-22T02:37:15Z  2018-05-22T02:43:03Z  Auto-refresh snap "core"
+      12   Error   2018-05-22T02:40:20Z  2018-05-22T03:05:50Z  Install "okular" snap
+      13   Error   2018-05-22T03:00:38Z  2018-05-22T03:01:53Z  Install "git-ubuntu" snap
+      14   Doing   2018-05-22T03:01:47Z  -                     Install "git-todos" snap
+
+  - 终止掉这个任务，命令如下 ::
+
+      sudo snap abort 14
+
+- `shutter` 工具的编辑功能被禁用。
+
+  - 下载 `libgoocanvas-common <https://launchpad.net/ubuntu/+archive/primary/+files/libgoocanvas-common_1.0.0-1_all.deb>`_, `libgoocanvas3 <https://launchpad.net/ubuntu/+archive/primary/+files/libgoocanvas3_1.0.0-1_amd64.deb>`_, `libgoo-canvas-perl <https://launchpad.net/ubuntu/+archive/primary/+files/libgoo-canvas-perl_0.06-2ubuntu3_amd64.deb>`_ ， 并安装。
+
+日常管理中，用到的命令
+:::::::::::::::::::::::::::::
+- ubuntu版的sublime-text3输入中文问题
+
+  借助工具：sublime-text-imfix
+
+  更新包 ::
+
+    sudo apt-get update && sudo apt-get upgrade
+
+  ``Clone`` 工具的git库 ::
+
+    git clone https://github.com/lyfeyaj/sublime-text-imfix.git
+
+  安装 ``sublime-text-imfix`` ::
+
+    cd sublime-text-imfix
+    ./sublime-imfix
+
+- Ubuntu /home下中文目录如何修改成英文？
+
+  命令 ::
+
+    export LANG=en_US
+    xdg-user-dirs-gtk-update
+
+  跳出对话框询问是否将目录转化为英文路径,同意并关闭. ::
+
+     export LANG=zh_CN
+
+  关闭终端,并重起.下次进入系统,系统会提示是否把转化好的目录改回中文.选择不再提示,并取消修改.主目录的中文转英文就完成了~
+
+- Ubuntu18中，搜狗输入法的“候选栏”乱码。解决方法：
+
+  搜索进程 ``/usr/bin/fcitx`` 的pid，并将其 ``kill`` 。 ::
+
+    ps -aux | grep fcitx
+    kill -9 [pid]
+
+  然后重启这个进程： ::
+
+    fcitx
+
+- 查看所有服务状态： ::
+
+    service --status-all
+
+- 命令行向桌面发送通知： ::
+
+    notify-send 'Hello world!' 'This is an example notification.' --icon=dialog-information
+
+  控制弹窗提醒的持续时间（1秒钟）： ::
+
+    notify-send "Notification Title" "The message body is shown here"  --icon=dialog-information -t 1000
+
+  其他信息：
+
+  - xubuntu中，使用 **Xfce4-notifyd** 作为消息的常驻进程，它来接收消息并构造弹窗。
+
+- 在命令行部署定时任务（使用 **at** 命令）： ::
+
+    at now + 1 minutes -f .local/scripts/at/game-notify
+
+  此命令的含义是一分钟后执行文件 ``.local/scripts/at/game-notify`` 中的命令。
+
+  - 分钟： `minutes` ; 小时: `hour` ; 天: `days` ; 周: `weeks` 。
+  - 设定在固定的时间： ``at 10:30pm`` ； ``at 23:59 12/31/2018`` 。
+
 ArchLinux
-==============
+^^^^^^^^^^^^^^
 
 .. toctree::
    :maxdepth: 1
 
 安装的软件
-^^^^^^^^^^^^^
+:::::::::::::
 - 有道词典。命令：ydcv
 - 任务管理工具。命令：task，官网：https://taskwarrior.org，软件名：taskwarrior
   -   查看task的帮助信息的方式是：man task
@@ -64,17 +177,16 @@ ArchLinux
 - logger 命令将信息写到系统日志文件
 
 安装的服务
-^^^^^^^^^^^^^
+:::::::::::::
 -   kibana, elasticsearch
 
 开启的服务或命令备忘
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+::::::::::::::::::::::::::
 -   开启了“嵌套虚拟化”（home archlinux linux）
     -   相关细节：https://wiki.archlinux.org/index.php/KVM_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
--   启动代理服务的命令： ``ss-local -c /etc/shadowsocks/config.json`` 。
 
 命令备忘
-^^^^^^^^^^^^^
+:::::::::::::
 #.  taskwarrior的经典指令：::
 
         systemctl enable [service name]
@@ -87,41 +199,9 @@ ArchLinux
 
         systemctl -a --type=service
 
-#.  taskwarrior的经典指令：::
-
-        task add "ES-深入搜索-近似匹配" due:tomorrow proj:work pri:H +es depends:3
-        task [ID] modify due:3day
-        task [ID] modify desc:《教程》-深入搜索-近似匹配
-
-        task [ID] start 激活任务
-        task active 查看激活的任务。
-        task [ID] done 将任务设置为完成。
-        task completed 查看已经完成的任务。
-
-#.  向其他用户发送消息::
-
-        write [用户名] [ttyname(例如pts/1)]
-        write all
-        wall
-
-#.  判断用户是否存在::
-
-        id peter >& /dev/null
-        if [ $? -ne 0 ];then
-            echo "don't have the user"
-        fi
-
-#.  创建目录及子目录。::
-
-        mkdir -p folder1/folder2/folder3
-
 #.  软件升级::
 
         pacman -Syu
-
-#.  进程搜索::
-
-        ps -d -opid,etime,args | grep "$1" | grep -v grep
 
 #.  数据库查询各命令的执行时间::
 
@@ -130,20 +210,6 @@ ArchLinux
 #.  判断sql语句执行逻辑::
 
         explain select 3 from creative_all where channel = 3 and update_status = 3
-
-#.  显示文件peter.note的第5行到第9行的内容。::
-
-        sed -n "5,9p" peter.note
-
-#.  对数据结果进行统计<br/>
-    wc命令：统计指定文件中的字节数、字数、行数，并将统计结果显示输出。
-    例如：统计ps结果的行数::
-
-        ps -aux "sync/" | wc -l
-
-#.  使用更简洁的搜索文件命令：::
-
-        mlocate
 
 #.  xfce4的锁屏命令::
 
@@ -159,34 +225,18 @@ ArchLinux
 
 #.  启动Vnc: ``systemctl start x11vnc``
 
-#.  linux系统监控的命令
-
-    -   top
-    -   vmstat：虚拟内存统计
-    -   w：找到登录的用户
-    -   uptime：linux系统运行了多久
-    -   ps：显示系统的进程
-    -   free：内存的使用情况
-    -   iostat：CPU平均负载和磁盘活动
-    -   sar：监控、收集和汇报系统活动
-    -   mpstat：监控多处理器的使用情况。
-    -   pmap：监控进程的内存使用情况
-    -   netstat：linux网络统计监控系统
-    -   ss：网络统计
-    -   iptraf：获取实时网络统计信息
-
 #.  为pacman增加代理。只需要编辑 `/etc/pacman.conf` ::
 
         XferCommand = /usr/bin/curl --socks5 127.0.0.1:1080 -C - -f %u > %o
 
 名词摘录：
-^^^^^^^^^^^^^
+:::::::::::::
 -   disable the hot corners (activities button and message tray)
 -   软件工程的流程图，有个名词叫：UML
 -   图形桌面：KDE、Gnome、Xfce、LXDE
 
 软件备忘
-^^^^^^^^^^^^^
+:::::::::::::
 1.  Shell OSD
     Place shell notifications in the upper right hand corner.  Version 3 fixes the unclickable screen bug, and doesn't animate on mouse over.
     https://extensions.gnome.org/extension/243/shell-osd/
@@ -199,38 +249,16 @@ ArchLinux
 
 4.  UML的推荐软件：umlet, umbrello
 
-5.  docker的命令：
-
-    -   如果你想用你的使用者帳戶(非root帳戶)來使用Docker，把你的帳戶加到Docker的群組中： ``gpasswd -a user docker``
-    -   記得重新登入來套用新權限，或者你可以用這個指令讓現在的使用者階段套用新群組： ``newgrp docker``
-    -   ``docker ps`` 命令都出错，需要运行一下“docker ps”。
-    -   运行一个镜像： ``docker run -it base/archlinux:v1.0 /bin/bash``
-    -   启动镜像： ``docker run -t -i base/archlinux:v1.0 /bin/bash``
-    -   更新镜像： ``docker commit -m="has update" -a="runoob" 0abdd647ca96 base/archlinux:v1.0``
-    -   保存一个镜像： ``docker save -o temps/archlinux.image2.tar archlinux:v1``
-    -   加载一个镜像： ``docker load -i temps/archlinux.image2.tar``
-
-6.  Sphinx用法
-
-    -   ``sphinx-quickstart`` : 建立源目录及默认配置文件 conf.py。
-    -   ``make html`` ：生成html文档。
-
-常用命令
-^^^^^^^^^^^^^
-1.  wget使用代理下咋文件： ``wget -c -r -np -k -L -p -e "http_proxy=http://127.0.0.1:8087" [URL]``
-2.  注销当前用户： ``pkill X``
-3.  查看端口占用情况： ``netstat –apn | grep 1000``
-
 备忘记事
-^^^^^^^^^^^^^
+:::::::::::::
 1.  喜爱的屏保：Galaxy, Flurry, Flow, Flame, Fireworkx, FadPlot, Euler2D, Drift,  Discoball, Crackberg, CloudLife, Boxed, BinaryRing, Atunnel, Atlantis, 
 
 任务备忘
-^^^^^^^^^^^^^
+:::::::::::::
 1.  听说archlinux的包管理，没有缓存清理的功能。
 
 archlinux知识点
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+::::::::::::::::::::::::::
 1.  修改archlinux的源：/etc/pacman.d/mirrorlist, /etc/pacman.conf
 2.  pacman 常用命令
 
@@ -303,39 +331,15 @@ archlinux知识点
     减少10%                       xbacklight -dec 10
     ===========================  ============================================================================================
 
-运维备忘
-^^^^^^^^^^^^^
-- 在磁盘上建立文件的时候需要两个条件：1.磁盘空间，2.需要有inode  任何一个满了都回提示设备没有空间。
-
-  - ``df -h`` 可以查看磁盘剩余空间
-  - ``df -ia`` 可以查看磁盘详情，包括剩余的inode数量(还可以创建的文件/文件夹数量）。
-
 操作备忘
-^^^^^^^^^^^^^
+:::::::::::::
 -   ``gradle init --type pom`` ：将 ``pom.xml`` 转化为 ``build.gradle`` 。
 
-安装mutt
-^^^^^^^^^^^^^
--   安装mutt, msmtp, getmail
--   msmtp的配置文件：/etc/msmtprc::
+Centos使用备忘
+^^^^^^^^^^^^^^^
 
-        account default
-        host smtp.163.com
-        from name@163.com
-        auth login
-        tls off
-        user name@163.com
-        password passwd
-        logfile  /var/log/mmlog
+.. toctree::
+   :maxdepth: 1
 
--   mutt的配置文件：/etc/Muttrc::
-
-        set realname="yandong"
-        set use_from=yes
-        set sendmail="/usr/bin/msmtp"   #你的msmtp命令路径
-        set editor=vim
-
--   getmail的配置：
-
--   发送邮件的命令： ``echo "test" | mutt -s "测试" yandong@zingfront.com``
+   centos/gcc_update
 
