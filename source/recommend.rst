@@ -9,4 +9,5 @@
    work/index
    work/docs/case
    linux/index
+   skill/index
 

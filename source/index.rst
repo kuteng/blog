@@ -20,7 +20,6 @@
    :hidden:
    :caption: 内容
 
-   diary/index
    work/index
    excerpt/index
    note/index
@@ -31,6 +30,8 @@
 
 这里是闫冬的博客，那么该记录些什么呢？
 
+.. 屏蔽的内容
+   diary/index
 
 .. Indices and tables
 .. ==================

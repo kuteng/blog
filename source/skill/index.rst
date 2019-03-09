@@ -35,16 +35,16 @@
     elasticsearch
     python
     spring
+    spring/index
     php
     vue
     docker
-    english
     apache2
     apache_tomcat
     apache_flink
     apache_hadoop
     maven
-    spring/index
+    english
 
 软技能
 ^^^^^^^^^^^^^^^^^^^
