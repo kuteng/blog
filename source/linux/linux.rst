@@ -485,3 +485,15 @@ docker的命令：
 ShadowSocks
 :::::::::::::::::::::::
 - 启动代理服务的命令： ``ss-local -c /etc/shadowsocks/config.json`` 。
+
+Sublime
+:::::::::::::::::::::::
+
+不能兼容搜狗输入法的解决方法
+  下载这个项目： ``git clone https://github.com/lyfeyaj/sublime-text-imfix.git`` 。
+
+  运行它： ``cd sublime-text-imfix && ./sublime-imfix`` 。
+
+  解决
+
+  注意：需要需要通过 ``apt install sublime-text`` 方式安装sublime，而不能通过snap方式。

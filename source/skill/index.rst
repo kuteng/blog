@@ -36,6 +36,7 @@
     python
     spring
     php
+    vue
     docker
     english
     apache2
