@@ -3,6 +3,8 @@
 
 老板正在梳理资产，小店新品有限，敬请见谅。
 
+联系方式：yandongdedipan@163.com
+
 .. toctree::
    :maxdepth: 1
 

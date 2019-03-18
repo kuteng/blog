@@ -37,6 +37,12 @@ Vue
 配置
 ^^^^^^^^^^^^^^^
 - 修改网站端口，编辑文件 ``config/index`` ，位置是 ``dev.port`` ，默认是 ``8080`` 。
+- 自动打开浏览器。编辑文件 ``config/index.js`` ，修改 ``autoOpenBrowser:ture`` 。
+- 开启热更新。
+
+  在 `config/index.js` 修改 ``dev`` 中 ``poll`` 的值为 ``true`` 。
+
+  在 `build/webpack.dev.conf.js` 修改 ``devServer`` 中 ``hot`` 的值为 ``true`` 。
 
 使用说明
 ^^^^^^^^^^^^^^^^

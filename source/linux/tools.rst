@@ -439,3 +439,42 @@ tmux
 +             +------------+-------------------------------------------------------------------------------------+
 |             |   Ctrl+o   |  顺时针旋转当前窗口的面板                                                           |
 +-------------+------------+-------------------------------------------------------------------------------------+
+
+Derby
+^^^^^^^^^^^^^^^^^
+`Derby` 为java开发的嵌入式数据库，同时它也支持网络服务。需要注意的是：嵌入式访问时，不需要密码，但是通过互联网远程访问时需要密码；对于一个数据库而言，嵌入式访问（通过ij）与网络访问不能同事进行。
+
+Ubuntu中可以借助apt对derby进行安装。使用命令 ``apt search derby`` 可以查看可安装包，如下： ::
+
+  derby-doc/bionic,bionic,now 10.14.1.0-1ubuntu1 all [已安装，自动]
+    Apache Derby API documentation and examples
+
+  derby-tools/bionic,bionic,now 10.14.1.0-1ubuntu1 all [已安装，自动]
+    Apache Derby Tools
+
+  libderby-java/bionic,bionic,now 10.14.1.0-1ubuntu1 all [已安装，自动]
+    Apache Derby Database Engine and Embedded JDBC Driver
+
+  libderbyclient-java/bionic,bionic,now 10.14.1.0-1ubuntu1 all [已安装，自动]
+    Apache Derby Client JDBC Driver
+
+  sun-javadb-client/bionic,bionic,now 10.14.1.0-1ubuntu1 all [已安装]
+    Apache Derby Client JDBC Driver (transitional package)
+
+  sun-javadb-core/bionic,bionic,now 10.14.1.0-1ubuntu1 all [已安装]
+    Apache Derby Database Engine (transitional package)
+
+  sun-javadb-demo/bionic,bionic,now 10.14.1.0-1ubuntu1 all [已安装]
+    Apache Derby API documentation and examples (transitional pkg)
+
+  sun-javadb-doc/bionic,bionic,now 10.14.1.0-1ubuntu1 all [已安装]
+    Apache Derby API documentation and examples (transitional pkg)
+
+  sun-javadb-javadoc/bionic,bionic,now 10.14.1.0-1ubuntu1 all [已安装]
+    Apache Derby API documentation and examples (transitional pkg)
+
+使用命令安装上述安装包。
+
+然后可以通过命令 ``ij`` 可以管理本地 `Derby` 数据库。
+
+也可以通过命令 ``derbyctl`` 启动/管理 `Derby` 的远程数据库服务。

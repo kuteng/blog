@@ -45,8 +45,7 @@ Ubuntu
 
 日常管理中，用到的命令
 :::::::::::::::::::::::::::::
-- ubuntu版的sublime-text3输入中文问题
-
+ubuntu版的sublime-text3输入中文问题
   借助工具：sublime-text-imfix
 
   更新包 ::
@@ -62,8 +61,7 @@ Ubuntu
     cd sublime-text-imfix
     ./sublime-imfix
 
-- Ubuntu /home下中文目录如何修改成英文？
-
+Ubuntu /home下中文目录如何修改成英文？
   命令 ::
 
     export LANG=en_US
@@ -75,8 +73,7 @@ Ubuntu
 
   关闭终端,并重起.下次进入系统,系统会提示是否把转化好的目录改回中文.选择不再提示,并取消修改.主目录的中文转英文就完成了~
 
-- Ubuntu18中，搜狗输入法的“候选栏”乱码。解决方法：
-
+Ubuntu18中，搜狗输入法的“候选栏”乱码。解决方法：
   搜索进程 ``/usr/bin/fcitx`` 的pid，并将其 ``kill`` 。 ::
 
     ps -aux | grep fcitx
@@ -86,11 +83,18 @@ Ubuntu
 
     fcitx
 
-- 查看所有服务状态： ::
+查看所有服务状态：
+  ::
 
     service --status-all
 
-- 命令行向桌面发送通知： ::
+查看已安装软件的安装位置：
+  如果已知软件使用apt-get install命令安装的，可以使用这种方法 ::
+
+    dpkg -L chromium-browser
+
+命令行向桌面发送通知：
+  ::
 
     notify-send 'Hello world!' 'This is an example notification.' --icon=dialog-information
 
@@ -102,7 +106,8 @@ Ubuntu
 
   - xubuntu中，使用 **Xfce4-notifyd** 作为消息的常驻进程，它来接收消息并构造弹窗。
 
-- 在命令行部署定时任务（使用 **at** 命令）： ::
+在命令行部署定时任务（使用 **at** 命令）：
+  ::
 
     at now + 1 minutes -f .local/scripts/at/game-notify
 
