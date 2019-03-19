@@ -44,6 +44,7 @@
     apache_flink
     apache_hadoop
     maven
+    redis
     english
 
 软技能
