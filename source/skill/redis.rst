@@ -119,3 +119,21 @@ Redis
   - ``no-enviction`` ：禁止驱逐数据。（envition ? ）
 
 - 有序集合操作的时间复杂度：查找（ `O(1)` ）、修改/删除（ `O(log(n))` ）。因为后者涉及到修改 `skiplist` 。
+
+Spring Data Redis
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+相关类、接口
+#################
+RedisConnection
+  管理相关与Redis的链接。同时它对Redis的异常进行了封装；它能够让我们对Redis与其他数据库（Dao）进行无缝切换。
+
+  ``LettuceConnection`` 、 ``JedisConnection`` 是它的两种实现。前者是基于 ``Netty`` 的Redis连接器（Netty是由JBOSS提供的一个java开源框架）；而后者是“社区”支持的Redis连接器。
+
+RedisConnectionFactory
+  生成 ``RedisConnection`` 。它继承子接口 ``PersistenceExceptionTranslator`` ，后者对 `接口方法` 对异常进行“翻译”，关于这个“翻译”似乎又与 ``@Repository`` 注释、 ``AOP`` 有关。可以尝试了解一下。
+
+  ``LettuceConnectionFactory`` 、 ``JedisConnectionFactory`` 是它的两种实现。
+
+名词
+^^^^^^^^^^^^^^
+- ``IoC`` ：控制反转，常见的有依赖注入。

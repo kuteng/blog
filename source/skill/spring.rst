@@ -2,8 +2,10 @@ Spring
 =====================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :numbered: 0
+
+   spring/ioc
 
 安装
 ^^^^^^^^^^^^^^^^^

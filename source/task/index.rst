@@ -38,6 +38,12 @@
 ^^^^^^^^^^^^^^^^
 - 搭建自己的网站。包括：同步密码文件（keepass2）、收集/整理琐碎记录（灵感、阅读摘录）、管理任务记录（Taskwarrior）。
 - 寻找Android平台的KeePass2应用，能够与远程的密码库交互。
+- 了解框架 **asciidoctor** 。
+
+  - **swagger2markup** 与 **asciidoctor** 结合。
+  - **Swagger** 注解和 **Springfox**
+
+- 了解一下 ``Apache Maven Doxia``
 
 学习任务
 ^^^^^^^^^^^^^^^^

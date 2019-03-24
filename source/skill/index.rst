@@ -11,7 +11,10 @@
 
 感兴趣的技能
 ^^^^^^^^^^^^^^^^^^
+- ``Apache Maven Doxia`` : 这个项目是一个内容生成框架，强烈关注一下：http://maven.apache.org/doxia/index.html
+- ``Apache Annotator`` 是个有趣的项目。注释代码还是社区性的。
 - Apache Dubbo, Nacos
+- Apache MyFaces
 - RocksDB
 - JNDI, LAMP
 - Web服务器和应用服务器的区别
@@ -23,6 +26,7 @@
 - Apache Jackrabbit Oak: 内容资源库
 - Apache Solr: 先进的搜索服务器
 - Mesos, Kubernetes
+- Apache OpenMeetings
 
 - 个人网站（博客）框架：WordPress、LAMP、Drupal
 
