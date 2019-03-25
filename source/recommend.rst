@@ -10,6 +10,8 @@
 
    work/index
    work/docs/case
+   excerpt/books/mastering_hadoop
    linux/index
    skill/index
+   skill/spring/ioc
 

@@ -1,11 +1,11 @@
-逆向控制
+Spring IoC 容器
 =====================
 
 网址：`Version 5.1.5.RELEASE <https://docs.spring.io/spring-framework/docs/5.1.5.RELEASE/spring-framework-reference/core.html>`_
 
 备忘
 ^^^^^^^^^^^^
-- IOC是一个对象定义自己依赖关系（）的过程。定义的方式有三种：通过构造方法及其参数；通过工厂方法及其参数；通过构造(工厂创造）完成后对象的set方法。 `依赖关系` 可以理解为：可以理解为创建一个这样的对象需要的 `类` 及 `其他对象实例` ,类似于构造方法与方法参数。
+- IOC是一个对象定义自己依赖关系的过程。定义的方式有三种：通过构造方法及其参数；通过工厂方法及其参数；通过构造(工厂创造）完成后对象的set方法。 `依赖关系` 可以理解为：可以理解为创建某个对象需要的 `类` 及 `其他对象实例` ,类似于构造方法与方法参数。
 - ``ApplicationContext`` 接口就是 *Spring* 里的 `IoC容器` ，它负责Bean的实例化、配置和组装。
 
   ``ApplicationContext`` 是 ``BeanFactory`` 的子接口。相对与后者，前者有如下特性。
@@ -29,7 +29,7 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-- ``Annotation-based configuration`` 与 ``Java-based configuration`` 的区别？
+- 疑问： ``Annotation-based configuration`` 与 ``Java-based configuration`` 的区别？
 - 配置Bean的时候， `XML-base` 方式中使用 ``<beans>`` 里的 ``<bean>`` 进行配置；而 `java configuration` 方式中是使用在被 ``@Configuration`` 注解的类中被 ``@Bean`` 注解的方法（对于 `java configuration` 中有些疑惑）。
 
   在 `XML-base` 方式中， ``<bean>`` 标签有 ``id`` 和 ``class`` 属性。 ``id`` 是唯一的，且用它可以参与到与其他Bean的“协作”中。
@@ -66,7 +66,7 @@
 
   默认情况下， `Spring IoC` 容器不强制要求Bean的先后顺序，如上例中的 `petStore` 和 `itemDao` 。
 
-- 我们创建Bean对象时，通常是创建服务层对象、数据访问对象（如Dao）、 `Struts Actions` 、基础结构对象（如 `Hibernate SessionFactories` 、 `JMS Queues` ）。使用 `Bean` 去定义 “细粒度”的对象。
+- 我们创建Bean对象时，通常是创建服务层对象、数据访问对象（如Dao）、 `Struts Actions` 、基础结构对象（如 `Hibernate SessionFactories` 、 `JMS Queues` ）。而很少使用 `Bean` 去定义 “细粒度”的对象，将它们交给业务层自己服务就好。
 - 在 `java code` 中手动创建 `IoC容器` 的方法：
 
   .. code-block:: java
@@ -88,7 +88,7 @@
         <bean id="bean2" class="..."/>
     </beans>
 
-  注意例子中 `messageSource.xml` 和 `themeSource.xml` 必须位于导入文件位置下方的resource文件夹里面。
+  注意例子中 `messageSource.xml` 和 `themeSource.xml` 文件位置是一样的，都是在resource文件夹里面。
 
 - Java路径引用是，不建议使用 ``../`` 的方式调用父路径（可以但不建议使用），特别是在对于 ``classpath`` URLs，例如： ``classpath:../services.xml`` 。
 
@@ -111,7 +111,7 @@
 - ``BeanDefinition`` ：在Spring的 `IoC` 容器中，所有的Bean信息都存储在 `BeanDefinition` 里。它里面主要有如下信息：
 
   - 该Bean的实现类。
-  - `Bean behavioral configuration elements` ，说明bean在容器中的行为方式（如：范围(scope)，生命周期回调等）。其中 ``Scope`` 的默认选项是“单例”和“原型”，我个人就认为 ``Scope`` 是它的生命周期了。
+  - `Bean behavioral configuration elements` ，说明bean在容器中的行为方式（如：范围(scope)，生命周期回调等）。其中 ``Scope`` 的默认选项是“单例”和“原型”，我个人就认为 ``Scope`` 定义了它生命周期的类型。
   - 该Bean的依赖项：及执行工作需要的其他Bean。
   - 要在新创建的对象中设置的其他配置设置 - 例如，池的大小限制或在管理连接池的Bean中使用的连接数。
 
@@ -173,7 +173,7 @@
 
 - `Spring` 的 `IoC容器` 实例化一个Bean通过下面三种方式：
 
-  - 通过 *构造方法* 创建Bean：就如同前面几个例子那样，提供一个能用的构造方法就好（注意构造方法的参数）。推荐的方式是所有的Bean都有“默认”构造方法（及无参数），所有属性都通过set、get方法来设置、访问。
+  - 通过 *构造方法* 创建Bean：就如同前面几个例子那样，提供一个能用的构造方法就好（注意构造方法的参数）。推荐的方式是所有的Bean都有“默认”构造方法（及无参数），所有属性都通过set、get方法来设置、访问。（这是我的推荐，但是 Spring 团队似乎并不这样认为。
   - 通过 *静态工厂方法* 创建Bean：通过其他类的 *静态工厂方法* 生成Bean对象。如下：
 
     .. code-block:: xml
@@ -193,7 +193,7 @@
 
     `XML` 里面， ``class`` 属性的值并非 *Bean的类* 而是工厂方法所在的类（虽然在此例中这个 *类* 都是一个类）； ``factory-method`` 属性指向 *静态工厂方法* ，当然这个方法也是可以有参数（并配置好参数）的。
 
-    每次看着这个例子，我都会想到单例。不过有了 `Spring Ioc` ，还需要手动创建 *单例* 嘛！
+    每次看着这个例子，我都会想到单例。不过有了 `Spring Ioc` ，不需要手动创建 *单例* ！
 
     实验证明，默认情况下，哪怕没有示例中的静态成员，Bean依旧是保证 *单例* 状态的。
 
@@ -422,7 +422,7 @@
 
 - `Spring容器` 默认情况下，会在容器创建时首先将所有的 *作用于为单例* 的Bean 全部创建完成。当然我们可以更改为 *用到时创建* ，我觉的可以称后者为 **惰性加载单例Bean** 。
 
-  需要注意， **依赖项之间的解决方案不匹配** 这个问题可以会发现的比较晚，及在创建相关Bean的时候才会发现。对于 **实例Bean** 和 设置为单例Bean **惰性加载** 的时候。
+  需要注意，在 **实例Bean** 和 设置为单例Bean **惰性加载** 的时候， **依赖项之间的解决方案不匹配** 这个问题可以会发现的比较晚，及在创建相关Bean的时候才会发现。
 
 - **循环依赖** 只能通过 *setter注入* 来解决， *构造方法注入* 和 *工厂方法注入* 会报 ``BeanCurrentlyInCreationException`` 错误的。
 - 因为 ``Spring容器`` 会尽可能晚的 *set* 属性和解析依赖，而且 *实例Bean* 是 **惰性加载** 的，所以对于相关的配置异常和依赖错误， *容器* 会发现的比较晚。
@@ -722,6 +722,18 @@
 
 .. |beanfactory_uml| image:: /images/spring/BeanFactory\ UML.png
    :width: 100%
+
+有趣的代码
+^^^^^^^^^^^^^^^^^^^^^^^
+- 追踪 ``ApplicationContext`` 发现在 ``AbstractApplicationContext`` 有一段这个代码。它可以在某个类实例化之前加载其他类：
+
+  .. code-block:: java
+
+    static {
+      // Eagerly load the ContextClosedEvent class to avoid weird classloader issues
+      // on application shutdown in WebLogic 8.1. (Reported by Dustin Woods.)
+      ContextClosedEvent.class.getName();
+    }
 
 英语
 ^^^^^^^^^^^^^^^^^^^^^^^
