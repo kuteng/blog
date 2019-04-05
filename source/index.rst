@@ -9,14 +9,12 @@
 .. toctree::
    :maxdepth: 1
    :hidden:
-   :numbered: 0
    :caption: 导航
 
    recommend
 
 .. toctree::
    :maxdepth: 1
-   :numbered:
    :hidden:
    :caption: 内容
 

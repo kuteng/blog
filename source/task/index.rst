@@ -43,7 +43,11 @@
   - **swagger2markup** 与 **asciidoctor** 结合。
   - **Swagger** 注解和 **Springfox**
 
-- 了解一下 ``Apache Maven Doxia``
+- 了解一下 ``Apache Maven Doxia`` ，编写一个生成知识库的项目
+
+  - 将文本格式转化为HTML格式，可在网站输出。
+  - *解析* 各个知识点上的 *疑惑* 标记、 *待详尽* 标记，生成 **备忘录** 单独输出（单独页面或其他）。
+  - 搜索功能。
 
 学习任务
 ^^^^^^^^^^^^^^^^
