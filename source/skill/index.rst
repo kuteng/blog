@@ -49,6 +49,7 @@
     apache_hadoop
     maven
     redis
+    java
     english
 
 软技能

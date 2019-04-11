@@ -79,6 +79,30 @@
   - 谨慎使用延迟初始化
   - 避免在临界段中使用阻塞操作：除非必要，否则不要在临界段中加入阻塞操作。
 
+- 关于 *Optional* 类型数据的用法备忘：
+
+  - 没有 ``isPresent()`` 作铺垫的 ``get()`` 调用是不被推荐的。在 *获取* 之前，我们应该检验一下它是否 *可用* 。
+  - 不推荐把 ``Optional`` 类型用作属性或是方法参数。 ``Optional`` 只设计为类库方法的, 可明确表示可能无值情况下的返回类型. ``Optional`` 类型不可被序列化, 用作字段类型会出问题的。
+  - ``Optional.of(obj)`` : 它要求传入的 obj 不能是 ``Null`` 值的, 否则还没开始进入角色就倒在了 ``NullPointerException`` 异常上了.
+  - 这里有三个比较相近的方法： ``orElse()`` 、 ``orElseGet()`` 、 ``orElseThrow()`` 。
+  - ``filter()`` 把不符合条件的值变为 ``empty()`` ,   ``flatMap()`` 总是与 ``map()`` 方法成对的,
+
+  代码示例：
+
+  .. code-block:: java
+
+    // 如果userOptional可用，在打印输出。
+    userOptional.ifPresent(System.out::println);
+
+    // 当 user.isPresent() 为真, 获得它关联的 orders , 为假则返回一个空集合时
+    return userOptional.map(u -> u.getOrders()).orElse(Collections.emptyList())
+
+    // map()方法可以无限级联下去
+    // 当 user.isPresent() 为真, 获得用户名大写形式；否则获得空对象。
+    return user.map(u -> u.getUsername())
+               .map(name -> name.toUpperCase())
+                          .orElse(null);
+
 - 数组的并行排序方法 ``Arrays.parallelSort()`` 。
 - ``Semaphore`` 、 ``CountDownLatch`` 、 ``CyclicBarrier`` 三个同步控制类的区别：
 
@@ -87,7 +111,38 @@
   - ``CyclicBarrier`` 一般用于一组线程互相等待至某个状态，然后这组线程再同时执行。
 
 - 每个 Java 应用程序都有一个默认的 ``ForkJoinPool`` ，称作 **公用池** 。可以通过调用静态方法 ``ForkJoinPool.commonPool()`` 获得这样的公用池，而不需要采用显式方法创建（尽管可以这样做）。
-- **Fork/Join框架** ，Arrays类中的 ``parallelSort()`` 方法以及 **并行流** 都是使用此框架实现的。
+- **Fork/Join框架**
+
+  - 该框架有一个关键特性，即工作窃取算法。该算法确定要执行的任务。当一个任务使用 join()方法等待某个子任务结束时，执行该任务的线程将会从任务池中选取另一个等待执行的任务并且开始执行。通过这种方式， Fork/Join 执行器的线程总是通过改进应用程序的性能来执行任务。
+  - Java 8在 *Fork/Join框架* 中提供了一种新特性。现在，每个 Java应用程序都有一个默认的 ForkJoinPool，称作 **公用池** 。可以通过调用静态方法 ``ForkJoinPool.commonPool()`` 获得这样的公用池，而不需要采用显式方法创建（尽管可以这样做）。这种默认的 Fork/Join 执行器会自动使用由计算机的可用处理器确定的线程数。
+  - Arrays类中的 ``parallelSort()`` 方法以及 **并行流** 都是使用此框架实现的。
+  - ``fork()`` 方法：可以将本任务发送给 Fork/Join 执行器。
+  - ``invoke()`` 方法：可以将本任务发送给 Fork/Join 执行器，并等待任务执行结束。
+  - ``invokeAll(...)`` 方法：可以将多个子任务发送给 Fork/Join 执行器，并等待任务执行结束。
+  - ``join()`` 方法：可以等待本任务执行结束后返回其结果。
+  - 不再进行细分的基本问题的规模既不能过大也不能过小。按照 Java API 文档的说明，该基本问题的规模应该介于 100 到 10 000 个基本计算步骤之间。
+  - 数据可用前，不应使用阻塞型 I/O 操作，例如读取用户输入或者来自网络套接字的数据。这样的操作将导致 CPU 核资源空闲，降低并行处理等级，进而使性能无法达到最佳。
+  - 不能在任务内部抛出校验异常，必须编写代码来处理异常（例如，陷入未经校验的RuntimeException）。对于未校验异常有一种特殊的处理方式。
+  - 该类任务的入口可以通过 *Pool* 完成，如 ``ForkJoinPool.commonPool().execute(task)`` 等。 **注意** 不要忘记通过 ``task.join()`` 或 ``task.quietlyJoin()`` 来等待任务执行结束。
+  - ``join()`` 方法和 ``quietlyJoin()`` 方法之间的区别在于， ``join()`` 启动之后，如果任务撤销 或 在方法内部抛出一个未校验异常时，将抛出异常，而 ``quietlyJoin()`` 方法则不抛出任何异常。同时后者没有返回值，如果希望得到返回值，还需要再调用前者。类似区别的还有 ``invoke()`` 方法和 ``quietlyInvoke()`` 方法。
+
+    注意：对于这里提到的 **未校验异常** 即使我们在中途的 *Task* 中进行了捕获，它也依旧会传播到 **父Task** 和 **根Task** 。
+
+  - 该类任务分发的方式可以通过 ``invokeAll(...)`` 或 ``fork()`` 。
+  - **思考一下** 如果一批 *Fork/Join* 的任务因为某个任务有结果或抛出异常，我们希望其他未执行的任务或正在执行的任务都 **结束** ，应该怎么办？如果同一个 ``ForkJoinPool`` 中可能同时运行两批 *Fork/Join* 任务，前面的问题又如何解决？找一个容器，存放并管理所有放入 *Pool* 的任务吗？
+
+- **Fork/Join 框架** 的组成
+
+  - ``ForkJoinPool`` 类：该类实现了 ``Executor`` 接口和 ``ExecutorService`` 接口，而执行 ``Fork/Join`` 任务时将用到 `Executor` 接口。 Java 提供了一个默认的 ``ForkJoinPool`` 对象（称作公用池），但是如果需要，你还可以创建一些构造函数。你可以指定并行处理的等级（运行并行线程的最大数目）。默认情况下，它将可用处理器的数目作为并发处理等级。
+
+    **注意** ： ``execute()`` 方法、 ``invoke()`` 方法 和 ``submit()`` 方法都可以将 `Task` 发送给线程池，但是 ``execute()`` 没有返回值； ``invoke()`` 会等待任务结束并给出返回值；而 ``submit()`` 不会等待任务结束，而是立即返回一个 ``Future`` 对象。
+  - ``ForkJoinTask`` 类：这是所有 *Fork/Join* 任务的基本抽象类。该类是一个抽象类，提供了 ``fork()`` 方法和 ``join()`` 方法，以及这些方法的一些变体。该类还实现了 ``Future`` 接口，提供了一些方法来判断任务是否以正常方式结束，它是否被撤销，或者是否抛出了一个未校验异常。 ``RecursiveTask`` 类、 ``RecursiveAction`` 类和 ``CountedCompleter`` 类提供了 ``compute()`` 抽象方法。为了执行实际的计算任务，该方法应该在子类中实现。
+
+    注意： ``ForkJoinTask`` 可没有 ``compute()`` 方法。所以理论上，他应该不能被直接 *实现* ，或者我们应该仿照 ``RecursiveTask`` 等类去 *实现* 。
+
+  - ``RecursiveTask`` 类：该类扩展了 ``ForkJoinTask`` 类。 ``RecursiveTask`` 也是一个抽象类，而且应该作为实现 **返回结果** 的 *Fork/Join* 任务的起点。
+  - ``RecursiveAction`` 类：该类扩展了 ``ForkJoinTask`` 类。 ``RecursiveAction`` 类也是一个抽象类，而且应该作为实现 **不返回结果** 的 *Fork/Join* 任务的起点。
+  - ``CountedCompleter`` 类：该类扩展了 ``ForkJoinTask`` 类。 ``CountedCompleter`` 类也是一个抽象类，而且应该作为实现 **任务完成时触发另一任务** 的 *Fork/Join* 任务的起点。 *完成任务后触发另一个任务* 是通过重写方法 ``tryComplete()`` 、 ``onCompletion()`` 、 ``onExceptionalCompletion(...)`` 实现的，个人推荐重写 ``onCompletion()`` 方法。
 
 
 代码
@@ -298,7 +353,7 @@
   - 使用执行器控制资源很容易。
   - 你必须以显式方式结束执行器的执行。
 
-- **Fork/Join 框架**
+- **Fork/Join 框架** ：它必须用于解决基于分治方法的问题。必须将原始问题划分为较小的问题，直到问题很小，可以直接解决。
 - **并行流**
 - **并发数据结构** 又分为 **阻塞型数据结构** 和 **非阻塞型数据结构** 。
 - **并发设计模式** ： **信号模式** 、 **会合模式** 、 **互斥模式** 、 **多元复用模式** 、 **栅栏模式** 、 **双重检查锁定模式** 、 **读写锁模式** 、 **线程池模式** 、 **线程局部存储模式** 。
