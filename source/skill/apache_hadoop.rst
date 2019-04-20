@@ -3,7 +3,9 @@ Apache Hadoop
 
 .. toctree::
    :maxdepth: 1
-   :caption: 视频教程:
+   :caption: 细说:
+
+   hadoop/code_example
 
 入门
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

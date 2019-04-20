@@ -237,6 +237,30 @@ JVM调优工具
   - 缓存。缓存就比较多了，你所要快速访问的都可以放这里面。其实上面的业务数据也可以理解为一种缓存。
   - 线程。
 
+SpringBean 工作原理详解
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+- Spring中的bean默认都是单例的，这些单例Bean在多线程程序下如何保证线程安全呢？
+- Spring的单例是基于BeanFactory也就是Spring容器的，单例Bean在此容器内只有一个，Java的单例是基于 JVM，每个 JVM 内只有一个实例。
+- Bean的作用于：singleton, prototype, request、session 和 global session。
+
+  - 对有状态的 bean 应该使用 prototype 作用域，而对无状态的 bean 则应该使用 singleton 作用域。
+
+  .. code-block:: java
+
+    @Service
+    @Scope("singleton")
+    public class ServiceImpl{
+      ...
+    }
+
+  .. code-block:: xml
+
+    <bean id="account" class="com.foo.DefaultAccount" scope="prototype"/>
+     或者
+    <bean id="account" class="com.foo.DefaultAccount" singleton="false"/>
+
+    <bean id="loginAction" class=cn.csdn.LoginAction" scope="request"/>
+
 .. |jvm_parallel_gc| image:: /images/jvm/jvm_parallel_gc.png
 .. |jvm_serial_gc| image:: /images/jvm/jvm_serial_gc.png
 .. |jvm_concurrence_gc| image:: /images/jvm/jvm_concurrence_gc.png

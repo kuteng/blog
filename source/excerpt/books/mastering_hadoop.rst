@@ -22,12 +22,6 @@
 
 - 几个重点概念（推荐对应记忆）：
 
-  - 资源管理器(Resource Manager)、应用管理器(Application Manager)、节点管理器(Node Manager)、作业(Job)
-
-    - 容器、节点
-    - **资源请求** : 由谁发送资源请求呢？
-    - 我需要理清楚：容器与节点的异同； ``Application Manager`` 与 ``Job`` 的异同。
-
   - ``NameNode`` 、 ``DataNode`` 、 ``JournalNode`` 、 ``block report`` 、 ``block storage``
 
     - **NameNode** 、 **DataNode** 与 **Resource Manager** 、 **Application Manager** 、 **Node Manager** 有什么关联？
@@ -38,8 +32,6 @@
     - 其中 **数据复制** 与 **数据镜像** 有什么区别与优劣？
 
 - TODO: 去了解一下 ``MapReduce``
-- Hadoop的 `1.x` 与 `2.x` 的区别之一就是，由 **NameNode冷备份节点** 改为了 **NameNode热备份节点** 。
-- **JournalNode** 是什么东西？
 - **ZooKeeper** 似乎是一个“高可用的监听工具”，具体了解一下。
 - 本书中，通过对比 **1.x** 与 **2.x** ，介绍了Hadoop的几个重点改进。这种方式值的借鉴，通过对比两个不同的东西，让新手也能了解内部构造。通过对比进行介绍（学习）比“直接”的、“单独”的介绍要更介绍（学习）让人理解！
 - 函数式编程：一个将数据函数作为计算单元的计算机科学分支。（ **不懂** ）
