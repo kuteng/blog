@@ -116,6 +116,14 @@ Ubuntu18中，搜狗输入法的“候选栏”乱码。解决方法：
   - 分钟： `minutes` ; 小时: `hour` ; 天: `days` ; 周: `weeks` 。
   - 设定在固定的时间： ``at 10:30pm`` ； ``at 23:59 12/31/2018`` 。
 
+为ss-local创建服务
+:::::::::::::::::::::::::::
+- 创建文件 ``ss-local-auto-start`` ，内容在后面给出，并将其中 ``CONFFILE=`` 的值修改正确。
+- 将该脚本放到 ``/etc/init.d/`` 下。
+- 运行命令： ``updata.rc ss-local-auto-start default`` 。
+
+.. literalinclude:: /_codes/linux/script_for_ss-local-auto-start.sh
+
 ArchLinux
 ^^^^^^^^^^^^^^
 

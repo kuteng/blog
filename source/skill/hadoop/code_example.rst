@@ -4,212 +4,36 @@
 .. 标注重点代码
 .. :emphasize-lines: 3,5
 
-.. code-block:: java
+使用 CombineFileInputFormat 解决小文件问题
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``CombineFileInputFormat`` 是一个抽象类,它能够帮助我们合并文件,从而指定输入。我们需要重写 ``createRecordReader()`` 方法，这个方法实例化了一个自定义的 ``RecordReader`` 类的对象来读取记录。
 
-  package MasteringHadoop;
+``CombineFileRecordReader`` 是通用 ``RecordReader`` ，可以为 ``CombineFileSplit`` 里的每个数据块分发不同的recordReader。
 
-  import org.apache.hadoop.conf.Configuration;
-  import org.apache.hadoop.fs.FSDataInputStream;
-  import org.apache.hadoop.fs.FileSystem;
-  import org.apache.hadoop.fs.Path;
-  import org.apache.hadoop.io.LongWritable;
-  import org.apache.hadoop.io.Text;
-  import org.apache.hadoop.mapreduce.InputSplit;
-  import org.apache.hadoop.mapreduce.RecordReader;
-  import org.apache.hadoop.mapreduce.TaskAttemptContext;
-  import org.apache.hadoop.mapreduce.lib.input.*;
-  import org.apache.hadoop.util.LineReader;
+``CombineFileInputFormat`` 类在 ``getSplits()`` 方法中返回一个 ``CombineFileSplit`` 分片对象。每个分片可能合并了来自不同文件的不同块。如果使用 ``setMaxSplitSize()`` 方法设置了分片的最大容量，本地节点的文件将会合并到一个分片中，本地剩余的块将与来自同一机架的其他主机的块合并。然而，如果没有设置这个最大容量，合并操作 **不会在本地主机层面进行** ，它只会在 **同一机架** 内进行合并。如果将 ``setMaxSplitSize()`` 设置为HDFS的块容量，那是默认行为，也就是每个块对应一个分片。
 
-  import java.io.IOException;
+``CombineFileFormat`` 类有一个 ``isSplitable()`` 方法,它的默认返回值为true。如果你确认整个文件需要以一个Map任务来处理,则需要将它设置为返回false。
 
-  public class MasteringHadoopCombineFileInputFormat extends CombineFileInputFormat<LongWritable, Text> {
-      @Override
-      public RecordReader<LongWritable, Text> createRecordReader(InputSplit inputSplit,
-          TaskAttemptContext taskAttemptContext) throws IOException
-      {
-          return new CombineFileRecordReader<LongWritable, Text>((CombineFileSplit) inputSplit,
-                  taskAttemptContext,  MasteringHadoopCombineFileRecordReader.class);
-      }
+``MasteringHadoopCombineFileRecordReader`` 是我们自定义的 ``RecordReader`` 类，关注的方法有： **构造方法** 、 ``initialize()`` 、 ``nextKeyValue()`` 方法 、 ``getProgress()`` 和 ``close()`` 。其中， ``nextKeyValue()`` 方法会读取下一个键值对，但不会将 *键值对* 向外界输出，外界需要调用方法 ``getCurrentKey()`` 、 ``getCurrentValue()`` 分别获取 `Key` 与 `Value` 。
 
-      public static class MasteringHadoopCombineFileRecordReader extends RecordReader<LongWritable, Text> {
-          private LongWritable key;
-          private Text value;
-          private Path path;
-          private FileSystem fileSystem;
-          private LineReader lineReader;
-          private FSDataInputStream fsDataInputStream;
-          private Configuration configuration;
+``MasteringHadoopCombineFileRecordReader`` 实现中，我们可以发现它使用了 ``FSDataInputStream`` 对文件数据进行读取。 ``InputSplit`` 存放的只是 **文件信息** 的集合，没有内容。
 
-          private int fileIndex;
-          private CombineFileSplit combineFileSplit;
+下面的代码为 ``InputFormat`` 的实现：
 
-          private long start;
-          private long end;
+.. literalinclude:: /_codes/hadoop/code001-MasteringHadoopCombineFileInputFormat.java
+  :language: java
+  :emphasize-lines: 20, 23-25, 34, 54-55, 76, 126
 
-          public MasteringHadoopCombineFileRecordReader(CombineFileSplit inputSplit,
-                  TaskAttemptContext context, Integer index) throws IOException
-          {
+下面的代码为 ``Mapper`` 类与驱动程序的实现。 ``main`` 方法里的内容就是驱动程序，其中最重要的一行就是设置 ``InputFormat`` 作为 ``job.setInputFormatClass(MasteringHadoopCombine FileInputFormat.class)``  。当程序执行时,得到的标准输出也在代码段的后面列出。
 
-              this.fileIndex = index;
-              this.combineFileSplit = inputSplit;
+.. literalinclude:: /_codes/hadoop/code001-CombineFilesMasteringHadoop.java
+  :language: java
 
-              this.configuration = context.getConfiguration();
-              this.path = inputSplit.getPath(index);
-              this.fileSystem = this.path.getFileSystem(configuration);
-              this.fsDataInputStream = fileSystem.open(this.path);
-              this.lineReader = new LineReader(this.fsDataInputStream, this.configuration);
+运行的配置是：分片的数量是1,数据集的大小为5 MB,而HDFS块容量为128 MB。
+运行的结果是： ::
 
-              this.start = inputSplit.getOffset(index);
-              this.end = this.start + inputSplit.getLength(index);
-
-              this.key = new LongWritable(0);
-              this.value = new Text("");
-
-          }
-
-
-          @Override
-          public void initialize(InputSplit inputSplit, TaskAttemptContext taskAttemptContext)
-                  throws IOException, InterruptedException
-          {
-              //Overloaded in the constructor.
-          }
-
-          @Override
-          public boolean nextKeyValue() throws IOException, InterruptedException {
-              int offset = 0;
-              boolean isKeyValueAvailable = true;
-
-              if(this.start < this.end) {
-                  offset = this.lineReader.readLine(this.value);
-                  this.key.set(this.start);
-                  this.start += offset;
-              }
-
-              if(offset == 0) {
-                  this.key.set(0);
-                  this.value.set("");
-                  isKeyValueAvailable = false;
-              }
-
-              return isKeyValueAvailable;
-          }
-
-          @Override
-          public LongWritable getCurrentKey() throws IOException, InterruptedException {
-              return key;
-          }
-
-          @Override
-          public Text getCurrentValue() throws IOException, InterruptedException {
-              return value;
-          }
-
-          @Override
-          public float getProgress() throws IOException, InterruptedException {
-              long splitStart = this.combineFileSplit.getOffset(fileIndex);
-
-              if(this.start < this.end) {
-                  return Math.min(1.0f, (this.start -  splitStart)/ (float) (this.end - splitStart));
-              }
-
-              return 0;
-          }
-
-          @Override
-          public void close() throws IOException {
-              if(lineReader != null){
-                  lineReader.close();
-              }
-          }
-      }
-  }
-
-.. code-block:: java
-
-  package MasteringHadoop;
-
-  import org.apache.hadoop.conf.Configuration;
-  import org.apache.hadoop.fs.Path;
-  import org.apache.hadoop.mapreduce.*;
-  import org.apache.hadoop.io.*;
-  import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-  import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
-  import org.apache.hadoop.util.GenericOptionsParser;
-
-  import java.io.IOException;
-
-  public class CombineFilesMasteringHadoop {
-      public static class CombineFilesMapper extends  Mapper<LongWritable, Text, LongWritable, Text> {
-          @Override
-          protected void map(LongWritable key, Text value, Context context)
-                  throws IOException, InterruptedException
-          {
-              context.write(key, value);
-          }
-      }
-
-      public static void main(String args[]) throws IOException, InterruptedException,
-              ClassNotFoundException
-      {
-          GenericOptionsParser parser = new GenericOptionsParser(args);
-          Configuration config = parser.getConfiguration();
-          String[] remainingArgs = parser.getRemainingArgs();
-
-          Job job = Job.getInstance(config, "MasteringHadoop-CombineDemo");
-          job.setOutputKeyClass(LongWritable.class);
-          job.setOutputValueClass(Text.class);
-
-          job.setMapperClass(CombineFilesMapper.class);
-
-          job.setNumReduceTasks(0);
-
-          job.setInputFormatClass(MasteringHadoop.MasteringHadoopCombineFileInputFormat.class);
-          job.setOutputFormatClass(TextOutputFormat.class);
-
-          FileInputFormat.addInputPath(job, new Path(remainingArgs[0]));
-          TextOutputFormat.setOutputPath(job, new Path(remainingArgs[1]));
-
-          job.waitForCompletion(true);
-      }
-
-      /**
-       * 计数器Mapper用到的枚举类型。
-       */
-      public static enum WORDS_IN_LINE_COUNTER{
-          ZERO_WORDS,
-          LESS_THAN_FIVE_WORDS,
-          MORE_THAN_FIVE_WORDS
-      }
-
-      /**
-       * 一个计数器Mapper。但是每次Hadoop中，没有用到这个Mapper。
-       */
-      public static class MasteringHadoopCountersMap extends Mapper<LongWritable,
-              Text, LongWritable, IntWritable>
-      {
-          private IntWritable countOfWords = new IntWritable(0); 
-
-          @Override
-          protected void map(LongWritable key, Text value, Context context) throws IOException,
-                  InterruptedException
-          {
-              StringTokenizer tokenizer = new StringTokenizer(value.toString());
-              int words = tokenizer.countTokens();
-
-              if(words == 0)
-                  context.getCounter(WORDS_IN_LINE_COUNTER.ZERO_WORDS).increment(1);
-
-              if(words > 0 && words <= 5)
-                  context.getCounter(WORDS_IN_LINE_COUNTER.LESS_THAN_FIVE_WORDS).increment(1);
-              else
-                  context.getCounter(WORDS_IN_LINE_COUNTER.MORE_THAN_FIVE_WORDS).increment(1);
-
-              countOfWords.set(words);
-              context.write(key, countOfWords);
-          }
-      }
-  }
+  14/04/10 16:32:05 INFO input.FileInputFormat: Total input paths to process : 441
+  14/04/10 16:32:06 INFO mapreduce.JobSubmitter: number of splits:1
 
 .. code-block:: java
 

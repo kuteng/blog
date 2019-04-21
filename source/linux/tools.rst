@@ -1,120 +1,6 @@
 常用工具
 ======================================
 
-Vim用法
-^^^^^^^^^^^^^^^
-
-常用命令
-::::::::::::::
-设置折叠
-###############
-::
-
-    set foldmethod=indent
-    set fdm=indent
-
-- ``manual``           手工定义折叠
-- ``indent``           更多的缩进表示更高级别的折叠
-- ``expr``             用表达式来定义折叠
-- ``syntax``           用语法高亮来定义折叠
-- ``diff``             对没有更改的文本进行折叠
-- ``marker``           对文中的标志折叠
-
-
-设置tab为四个空格
-###################
-::
-
-    set ts=4
-    set noexpandtab
-    %retab!
-
-使用标签页
-###################
-- 使用标签页打开多个文件 ::
-
-    vim -p [fileName1] [fileName2] ...
-
-- 启动标签页： ::
-
-    :tabe[dit]
-    :tabnew [fileName]
-
-- 切换标签页 ::
-
-    :tabn[ext]、:tabN[ext]、:tabp[revious]
-    :tabn[ext] {count}
-    gt、gT
-    :tabfir[st]、:tabl[ast]
-
-- 列出所有标签页 ::
-
-    :tabs
-
-- 关闭标签页 ::
-
-    :tabc[lose][!]  关闭当前标签页
-    :tabc[lose][!]  {count} 关闭第N个标签页。
-    :tabo[nly][!]   关闭其他标签页。
-
-
-查找
-##########
--   在所有行中查找 字符串 出现的次数 ::
-
-        :%s/字符串/&/gn
-
--   在m和n行之间查找 字符串 出现的次数 ::
-
-        :m,ns/字符串/&/gn
-
-替换
-##################################################
-在命令最后加c，则表示每次替换前需要手动确认
-
--   替换当前行第一个 vivian 为 sky ::
-
-        :s/vivian/sky/
-
--   替换当前行所有 vivian 为 sky ::
-
-        :s/vivian/sky/g
-        :s/vivian/sky/gc
-
--   替换每一行的第一个 vivian 为 sky ::
-
-        :%s/vivian/sky/
-
--   替换每一行中所有 vivian 为 sky ::
-
-        :%s/vivian/sky/g
-        :%s/vivian/sky/gc
-
--   替换第 n 行开始到最后一行中每一行的第一个 vivian 为 sky (n 为数字，若 n 为 .，表示从当前行开始到最后一行) ::
-
-        :n,$s/vivian/sky/
-
--   替换第 n 行开始到最后一行中每一行所有 vivian 为 sky (n 为数字，若 n 为 .，表示从当前行开始到最后一行) ::
-
-        :n,$s/vivian/sky/g
-        :n,$s/vivian/sky/gc
-
--   让首字母大写 ::
-
-        :%s/^[a-z]/\U&/gc
-
-快捷命令
-##############
--   将选中范围内的字母变为小写 `gu` ，变为大写 `gU`
-
-相关的系统命令
-######################
--   `lsof -c  vim` 看看vim都打开了哪些文件。
-
-无法选中文字
-########################
--   ``set mouse=v``
-
 Git用法
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -189,156 +75,11 @@ Ctrl+Shift+F        格式化页面
 properties文件不能显示中文
   `菜单` -> `Preferences` -> `General` -> `ContentTypes` -> `Text` -> `Java Properties File` ，设置 `Default encoding` ，把下面的 `ISO-8859-1` 改为 `UTF-8` 或者 `GBK` （推荐 `UTF-8` ），然后Update
 
-MySql备忘
-^^^^^^^^^^^^^^^^^^^^^^
-
-常用命令
-:::::::::::::::
-修改数据
-########################
-::
-
-    UPDATE table_name SET field1=new-value1, field2=new-value2 [WHERE Clause]
-
-重置主键：
-#########################
-::
-
-    ALTER TABLE table_name AUTO_INCREMENT= 1;
-
-查询表的数据量
-#########################
-表：information_schema.tables，它存储了各个表的统计信息。 ::
-
-    select table_schema, table_name, table_rows, data_length, index_length from information_schema.tables order by table_rows desc;
-    select table_schema, table_name, table_rows, data_length, index_length from information_schema.tables where table_schema = 'sp_etl' order by table_rows desc;
-
-查询表的结构
-#########################
-::
-
-    desc sp_etl.creative_audience_network;
-
-包括字段注释 ::
-
-    show create table tablename;
-
-查询表的索引
-#########################
-::
-
-    show index from sp_etl.creative_audience_network;
-
-查询各语句的执行时间：
-#########################
-::
-
-    show processlist
-
-查询各IP的连接数：
-#########################
-::
-
-    select count(*) as num
-    from (
-        select SUBSTR(host, 1, INSTR(host, ':') - 1) as ip, db , command, info
-        from  information_schema.processlist
-    ) as a;
-
-    select ip, count(*) as num
-    from (
-        select SUBSTR(host, 1, INSTR(host, ':') - 1) as ip, db , command, info
-        from  information_schema.processlist
-    ) as a
-    group by ip order by num desc;
-
-创建数据库
-#########################
-::
-
-    create database if not exists dbname character SET latin1 collate latin1_bin;
-    create database if not exists dbname DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-
-更改数据库字符编码集
-#########################
-::
-
-    ALTER DATABASE db_name DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
-
-创建用户
-#########################
-::
-
-    CREATE USER 'username'@'localhost' IDENTIFIED BY 'passwd';
-
-赋予用户权限
-#########################
-::
-
-    GRANT ALL ON dbname.* TO 'username'@'localhost';
-
-查看所有用户
-#########################
-查看MYSQL数据库中所有用户 ::
-
-    SELECT DISTINCT CONCAT('User: ''',user,'''@''',host,''';') AS query FROM mysql.user;
-
-查看用户权限
-#########################
-查看数据库中具体某个用户的权限 ::
-
-    show grants for 'cactiuser'@'%';
-
-添加联合唯一约束
-#########################
-::
-
-    --修改表时
-    ALTER TABLE tabelName ADD UNIQUE KEY(col1, col2);
-    --创建表时
-    UNIQUE KEY `keyname` (`col1`,`col2`)
-
-修改用户密码
-#########################
-::
-
-    use mysql;
-    update user set password=password('新密码') where user='root';
-    flush privileges;
-
-忘记管理员密码
-#########################
--   在my.ini的[mysqld]字段下面加入： ``skip-grant-tables``
--   重启mysql服务，这时的mysql不需要密码即可登录数据库
--   然后进入mysql: ::
-
-        use mysql;
-        update user set password=password('新密码') where user='root';
-        flush privileges
-
-性能优化语句：
-#########################
-::
-
-    select table_name, data_length/1000000, index_length/1000000 from information_schema.tables where table_schema = 'sp_etl' and table_name like 'creative%' order by data_length desc, index_length desc;
-    select * from information_schema.processlist  where INFO like '%creative_audience_network%' order by TIME;
-
-保留字
-:::::::::
--   字段名不可用词：
-
-    -   key
-    -   desc
-
--   字段名可用词:
-
-    -   id
-    -   path
-
 Apache
 ^^^^^^^^^^^^^^^^^^^
+
 不同端口不同项目的配置
-#########################
+:::::::::::::::::::::::::
 文件： ``/etc/httpd/conf/httpd.conf`` ::
 
     Listen 9988
@@ -359,14 +100,16 @@ Apache
 
 Yii2
 ^^^^^^^^^^^^^^^^^^^^
+
 查看组建的版本
-####################
+::::::::::::::::::::
 通过文件 ``[yii2-home]/composer.lock`` 查看
 
 tmux
 ^^^^^^^^^^^^^^^^^^^
+
 快捷键
-#############
+:::::::::::::
 +-------------+------------+-------------------------------------------------------------------------------------+
 | Ctrl+b                   | 激活控制台；此时以下按键生效                                                        |
 +=============+============+=====================================================================================+

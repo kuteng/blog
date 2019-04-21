@@ -25,6 +25,7 @@
    skill/index
    task/index
    meno/index
+   tools/index
 
 这里是闫冬的知识库，那么该记录些什么呢？
 

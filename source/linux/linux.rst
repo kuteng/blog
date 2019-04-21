@@ -257,8 +257,8 @@ Linux
       Categories=GNOME;Application;Development;
       StartupNotify=true
 
-  - 我们可以看到在 ``/usr/share/applacations/`` 文件夹下有了eclipse的快捷方式
-  - 最后把eclipse快捷方式复制到桌面就可以启动了！
+  - 我们可以看到在 ``/usr/share/applacations/`` 文件夹下有了 **Eclipse的快捷方式** 。
+  - 最后把 **Eclipse快捷方式** 复制到 ``~/Desktop/`` 就可以启动了！
 
 增加swap分区
   查看系统是否有交换分区 ::
