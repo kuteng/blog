@@ -1,8 +1,14 @@
 代码示例
 ===========================
 
-.. 标注重点代码
-.. :emphasize-lines: 3,5
+MapReduce的简单演示
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+只需要定义好 ``Mapper`` 、 ``Reducer`` 以及驱动程序 ``main()`` 方法，就可以实现一个简单的 **MapReduce** 。代码如下：
+
+.. literalinclude:: /_codes/hadoop/code000-WordCount.java
+  :language: java
+
+启动命令如下： ``hadoop jar target/wordcount-1.0-SNAPSHOT.jar com.peter.hadoop.wordcount.WordCount wordcount/input wordcount/output`` 。
 
 使用 CombineFileInputFormat 解决小文件问题
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
