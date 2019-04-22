@@ -2,7 +2,8 @@
 ==================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    disabuse/java_concurrent
    disabuse/java_other
+   disabuse/design_mode
