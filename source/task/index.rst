@@ -52,3 +52,6 @@
 学习任务
 ^^^^^^^^^^^^^^^^
 
+书籍
+^^^^^^^^^^^^^^^^
+《Taking the Work Out of Networking: An Introvert's Guide to Making Connections That Count（如何在工作中建立人际网络：给内向者的社交指南）》
