@@ -38,8 +38,6 @@
 
     elasticsearch
     python
-    spring
-    spring/index
     php
     vue
     docker
@@ -49,7 +47,6 @@
     apache_hadoop
     maven
     redis
-    java
     english
 
 软技能

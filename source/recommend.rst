@@ -13,5 +13,5 @@
    excerpt/books/mastering_hadoop
    linux/index
    skill/index
-   skill/spring/ioc
+   special_subject/java/spring/ioc
 

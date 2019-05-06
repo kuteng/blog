@@ -30,6 +30,10 @@ Maven
 
   其中 ``-Dwtpversion=2.0`` 就是告诉 Maven 将项目转换到 Eclipse 的 Web 项目(WAR)，而不是默认的Java项目(JAR)。
 
+- 如果增加版本控制的话需要这样： ::
+
+    mvn archetype:generate -DgroupId=com.yiibai -DartifactId=NumberGenerator -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+
 总结
 ^^^^^^^^^^^^^^^^^^^^^^^
 - ``dependency`` 表示依赖，子标签有： ``groupId`` 、 ``artifactId`` 、 ``version`` 。
@@ -92,8 +96,7 @@ Maven
 
 零散的知识点
 ^^^^^^^^^^^^^^^^^^^^^^^
-- ``scope`` 
-
+``scope``
   scope在maven的依赖管理中主要负责项目的部署，像下面的代码 ::
 
     <dependencies>
@@ -123,8 +126,11 @@ Maven
   - provided：打包的时候可以不用包进去，别的设施会提供。事实上该依赖理论上可以参与编译，测试，运行等周期。相当于compile，但是打包阶段做了exclude操作
   - system：从参与度来说，和provided相同，不过被依赖项不会从maven仓库下载，而是从本地文件系统拿。需要添加systemPath的属性来定义路径
 
-- 运行jar文件的方法之一： ``java -cp target/NumberGenerator-1.0-SNAPSHOT.jar com.yiibai.App`` ，其中 ``com.yiibai.App`` 是个类。
-- 设置国内中央仓库。（以aliyun仓库为例：http://maven.aliyun.com/nexus/content/groups/public/）。
+运行jar文件的方法之一
+  ``java -cp target/NumberGenerator-1.0-SNAPSHOT.jar com.yiibai.App`` ，其中 ``com.yiibai.App`` 是个类。
+
+设置国内中央仓库
+  以aliyun仓库为例：http://maven.aliyun.com/nexus/content/groups/public/ 。
 
   将 `/usr/share/maven/conf/settings.xml` 复制到 `~/.m2/settings.xml` 。然后修改文件： ::
 
@@ -136,6 +142,11 @@ Maven
         <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
       </mirror>
     </mirrors>
+
+设置子项目
+  - 将文件 ``pom.xml`` 中的 ``<packaging>jar</packaging>`` 改为 ``<packaging>pom</packaging>`` 。
+  - 然后就可以在该目录下创建子项目 "child" 了。
+  - 将子项目 ``pom.xml`` 中的 ``<groupId>...</groupId>`` 、 ``<version>...</version>`` 去掉，再添加上 ``<packaging>jar</packaging>`` 。因为groupId和version会继承system-parent中的groupId和version，packaging设置打包方式为jar。
 
 问题
 ^^^^^^^^^^^^^^^^^^^^^^^

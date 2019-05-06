@@ -57,6 +57,18 @@ Git代理的设置方法
 - 下面的窗口是自动merge的结果。编号为1
 - 使用命令 `:diffget [num]` 可快速merge。
 
+打Tag（标签）
+:::::::::::::::::::::::::
+增加标签
+  ::
+
+    git tag -a <tag name> -m 'comment of the tag'
+
+提交标签
+  注意，使用 ``git push`` 是无法提交tag的。需要这样： ::
+
+    git push origin [tagname]
+
 Eclilpse
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 

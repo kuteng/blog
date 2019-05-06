@@ -27,6 +27,15 @@
    meno/index
    tools/index
 
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: 专题
+
+   special_subject/java
+   special_subject/distributed
+   special_subject/big_data
+
 这里是闫冬的知识库，那么该记录些什么呢？
 
 .. 屏蔽的内容
