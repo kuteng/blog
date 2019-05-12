@@ -23,5 +23,9 @@ Java专题
 
 .. toctree::
    :maxdepth: 1
+   :caption: 技术细节
+
+.. toctree::
+   :maxdepth: 1
    :hidden:
    :caption: 源码分析

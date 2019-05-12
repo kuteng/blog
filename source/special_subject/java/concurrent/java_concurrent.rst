@@ -7,6 +7,7 @@
 - BlockingQueue是在生产/消费者模式下经常会用到的数据结构，通常常用的主要会是ArrayBlockingQueue、LinkedBlockingQueue和SynchronousQueue。ArrayBlockingQeue/LinkedBlockingQueue两者的最大不同主要在于存放Queue中对象方式，一个是数组，一个是链表。SynchronousQueue是一个非常特殊的BlockingQueue，它的模式是在offer的时候，如果没有另外一个线程正在take或poll的话，那么offer就会失败；在take的时候，如果没有另外的线程正好并发在offer，也会失败，这种特殊的模式非常适合用来做要求高响应并且线程出不固定的线程池的Queue。
 - ``CopyOnWriteArrayList`` 与 ``ArrayList`` 、 ``CopyOnWriteArraySet`` 与 ``HashSet``
 - ``ConcurrentHashMap`` ，JDK6中采用一种更加细粒度的加锁机制Segment“分段锁”，JDK8中采用CAS无锁算法，详细分析推荐阅读。参考阅读： `ConcurrentHashMap源码分析（JDK8版本） <https://blog.csdn.net/u010723709/article/details/48007881>`_
+- 线程池在五个重要参数：核心线程数（corePoolSize）、任务队列容量（queueCapacity）、ThreadFactory、BlockingQueue<Runnable>、RejectedExecutionHandler、线程空闲时间(keepAliveTime)。
 
 
 ``StringBuffer`` 、 ``StringBuilder`` 和 ``StringWriter`` 
@@ -23,6 +24,7 @@
   - ``LinkedBlockingQueue`` 对应 ``BlockingQueue`` ，基于链表实现的可阻塞的FIFO队列
   - ``ArrayBlockingQueue`` 对应 ``BlockingQueue`` ，基于数组实现的可阻塞的FIFO队列
   - ``PriorityBlockingQueue`` 对应 ``BlockingQueue`` ，按优先级排序的队列
+
 
 用法示例
 ^^^^^^^^^^^^^^^^^^^^^^^

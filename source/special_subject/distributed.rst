@@ -6,4 +6,5 @@
    :caption: 专题
 
    distributed/apache_thrift
-   distributed/spring_cloud
+   distributed/spring_cloud_guide
+   distributed/spring_cloud_summary

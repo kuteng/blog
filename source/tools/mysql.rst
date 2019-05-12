@@ -79,6 +79,7 @@ MySql
 ::
 
   CREATE USER 'username'@'localhost' IDENTIFIED BY 'passwd';
+  CREATE USER 'username'@'%' IDENTIFIED BY 'passwd';
 
 赋予用户权限
 :::::::::::::::::::::::::
@@ -97,6 +98,12 @@ MySql
 查看数据库中具体某个用户的权限 ::
 
   show grants for 'cactiuser'@'%';
+
+删除用户
+:::::::::::::::::::::::::
+::
+
+  DROP USER 'username'@'localhost';
 
 添加联合唯一约束
 :::::::::::::::::::::::::
@@ -124,6 +131,15 @@ MySql
     use mysql;
     update user set password=password('新密码') where user='root';
     flush privileges
+
+初次设置Root密码
+:::::::::::::::::::::::::
+- ``su`` 命令，将系统切换到root用户。
+- ``mysqladmin -uroot -p password 'newpassword'`` 执行此命令，修改密码。
+- 在系统反馈： ``Enter password:`` 时， **直接敲回车** 。
+- 将系统退出root用户。
+- ``systemctl restart mysql`` 重启Mysql服务。
+
 
 性能优化语句：
 :::::::::::::::::::::::::

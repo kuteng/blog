@@ -1,4 +1,4 @@
-Spring Cloud
+Spring Cloud入门指南
 =======================
 服务治理
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -249,6 +249,23 @@ Spring Cloud Feign
 ^^^^^^^^^^^^^^^^^^^^^^^^
 Spring Cloud Stream
 :::::::::::::::::::::::::
+参考
+  `Spring Cloud构建微服务架构：消息驱动的微服务（入门）【Dalston版】 <https://segmentfault.com/a/1190000012497486>`_
+
+  `Spring Cloud构建微服务架构：消息驱动的微服务（核心概念）【Dalston版】 <https://segmentfault.com/a/1190000013026925>`_
+
+  `Spring Cloud构建微服务架构：消息驱动的微服务（消费组）【Dalston版】 <https://segmentfault.com/a/1190000013343907>`_
+
+  `Spring Cloud Stream如何处理消息重复消费？ <https://segmentfault.com/a/1190000017150745>`_
+
+  `Spring Cloud Stream消费失败后的处理策略（一）：自动重试 <https://segmentfault.com/a/1190000017369803>`_
+
+  `Spring Cloud Stream消费失败后的处理策略（二）：自定义错误处理逻辑 <https://segmentfault.com/a/1190000017388788>`_
+
+代码示例
+  项目： `spring_cloud/stream-client <https://gitee.com/Kuteng/spring_cloud/tree/master/stream-client>`_
+
+**待续**
 
 知识点
 ^^^^^^^^^^^^^^^^^^^^^^^
