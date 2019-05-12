@@ -25,6 +25,10 @@ Java专题
    :maxdepth: 1
    :caption: 技术细节
 
+   java/technical_detail/debugging_tool
+   java/technical_detail/concurrent_lock
+   java/technical_detail/java_memory_model
+
 .. toctree::
    :maxdepth: 1
    :hidden:

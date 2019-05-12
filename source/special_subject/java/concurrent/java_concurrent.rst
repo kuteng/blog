@@ -25,6 +25,18 @@
   - ``ArrayBlockingQueue`` 对应 ``BlockingQueue`` ，基于数组实现的可阻塞的FIFO队列
   - ``PriorityBlockingQueue`` 对应 ``BlockingQueue`` ，按优先级排序的队列
 
+AtomicBoolean
+  ``compareAndSet`` ：如果当前值 == 预期值，则以原子方式将该值设置为给定的更新值。这里需要注意的是这个方法的返回值实际上是是否成功修改，而与之前的值无关。
+
+  ``getAndSet`` ：以原子方式设置为给定值，并返回以前的值。
+
+LongAdder、DoubleAdder
+  存储由不同线程频繁更新的长整型和双精度值。在这方面他们提供了比 ``AtomicLong`` 、 ``AtomicDouble`` 更好的性能。
+
+  ``LongAccumulator`` 、 ``DoubleAccumulator`` 与前者两者类似不过它们需要在构造函数中指定两个参数：
+
+  - 计数器的初始值
+  - 能够表示为lambda表达式的LongBinaryOperator或DoubleBinaryOperator。此表达式接收变量的旧值和要应用的增量，并返回变量的新值。
 
 用法示例
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -60,6 +72,11 @@
   ``LinkedBlockingQueue`` 是一个带有阻塞操作的并发数据结构。 ``take()`` 方法是“取数据”的，如果从列表中获取某个项但是列表为空，那么调用方法的线程就会被阻塞，直到列表中有元素为止。
 
 -------
+
+``Thread.yield()``
+  将当前线程的执行时间片段让出去，以便由线程调度机制重新决定哪个线程可以执行。
+
+  与 ``Thread.sleep(100)`` 、 ``object.wait()`` 类似却又不同。
 
 待续
 

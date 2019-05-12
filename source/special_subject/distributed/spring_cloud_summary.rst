@@ -39,22 +39,22 @@ Spring Cloud 总结
 
   .. code-block:: java
 
-  public class MyController {
-      // 方法一：使用DiscoveryClient
-      @Autowired
-      private DiscoveryClient discoveryClient;
-      // 方法二：使用EurekaClient
-      @Autowired
-      private EurekaClient eurekaClient;
+    public class MyController {
+        // 方法一：使用DiscoveryClient
+        @Autowired
+        private DiscoveryClient discoveryClient;
+        // 方法二：使用EurekaClient
+        @Autowired
+        private EurekaClient eurekaClient;
 
-      public List<ServiceInstance> showInfo() {
-          String applicationName = "microservice-provider-user"
-          // 方法一：
-          return this.discoveryClient.getInstances(applicationName);
-          // 方法二：
-          return this.eurekaClient.getApplications();
-      }
-  }
+        public List<ServiceInstance> showInfo() {
+            String applicationName = "microservice-provider-user"
+            // 方法一：
+            return this.discoveryClient.getInstances(applicationName);
+            // 方法二：
+            return this.eurekaClient.getApplications();
+        }
+    }
 
 TODO
 ^^^^^^^^^^^^^^^^
