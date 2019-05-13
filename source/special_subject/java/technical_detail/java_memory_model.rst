@@ -140,6 +140,10 @@ Java内存模型中定义的两项操作之间的次序关系，如果说操作A
 
 一个操作”时间上的先发生“不代表这个操作会是”先行发生“，那如果一个操作”先行发生“是否就能推导出这个操作必定是”时间上的先发生 “呢？也是不成立的，一个典型的例子就是指令重排序。所以时间上的先后顺序与happens-before原则之间基本没有什么关系，所以衡量并发安全问题一切必须以happens-before 原则为准。
 
+问题
+^^^^^^^^^^^^^^^^^^^^
+- ``ThreadLocal`` 在Java中的内存模型是什么样的？它是否会在工作内存中有备份？
+
 
 .. |the_diagram_of_hardware_efficiency_and_consistency| image:: /images/special_subject/java/001_the_diagram_of_hardware_efficiency_and_consistency.jpg
    :width: 80%
