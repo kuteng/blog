@@ -723,6 +723,78 @@ Spring IoC 容器
 .. |beanfactory_uml| image:: /images/spring/BeanFactory\ UML.png
    :width: 100%
 
+冷门、难点备忘
+^^^^^^^^^^^^^^^^^^^^^^^
+如何为类的静态成员 *注入*
+:::::::::::::::::::::::::::::
+XML方式实现
+  .. code-block:: xml
+
+    <bean id="mongoFileOperationUtil" class="com.*.*.MongoFileOperationUtil" init-method="init">
+        <property name="dsForRW" ref="dsForRW"/>
+    </bean>
+
+  .. code-block:: java
+
+    public class MongoFileOperationUtil {
+        private static AdvancedDatastore dsForRW;
+        private static MongoFileOperationUtil mongoFileOperationUtil;
+
+        public void init() {
+            mongoFileOperationUtil = this;
+            mongoFileOperationUtil.dsForRW = this.dsForRW;
+        }
+    }
+
+  构建 ``mongoFileOperationUtil`` 这个bean的时候，执行完构造方法后，还会执行该对象的 ``init()`` 方法，以便注入 `dsForRW`` 。
+
+``@PostConstruct`` 方式实现
+  .. code-block:: java
+
+    import org.mongodb.morphia.AdvancedDatastore;
+    import org.springframework.beans.factory.annotation.Autowired;
+
+    @Component
+    public class MongoFileOperationUtil {
+        @Autowired
+        private static AdvancedDatastore dsForRW;
+
+        private static MongoFileOperationUtil mongoFileOperationUtil;
+
+        @PostConstruct
+        public void init() {
+            mongoFileOperationUtil = this;
+            mongoFileOperationUtil.dsForRW = this.dsForRW;
+        }
+    }
+
+  ``@PostConstruct`` 注解的方法在加载类的构造函数之后执行，也就是在加载了构造函数之后，执行init方法；( ``@PreDestroy`` 注解定义容器销毁之前的所做的操作)
+  这种方式和在xml中配置 ``init-method`` 和 ``destory-method`` 方法差不多，定义spring 容器在初始化bean 和容器销毁之前的所做的操作；
+
+``set`` 方法上添加 ``@Autowired`` 注解，类定义上添加 ``@Component`` 注解
+  .. code-block:: java
+
+    import org.mongodb.morphia.AdvancedDatastore;
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.stereotype.Component;
+
+    @Component
+    public class MongoFileOperationUtil {
+        private static AdvancedDatastore dsForRW;
+
+        @Autowired
+        public void setDatastore(AdvancedDatastore dsForRW) {
+            MongoFileOperationUtil.dsForRW = dsForRW;
+        }
+    }
+
+  首先Spring要能扫描到AdvancedDatastore的bean，然后通过setter方法注入；
+
+  注意：成员变量上不需要再添加@Autowired注解；
+
+问题
+  上面的三种方法，都是会创建 ``MongoFileOperationUtil`` 这个类的Bean，将它们用IOC容器管理起来。既然已经创建对象了，那么这些静态成员和方法，为什么还要保持静态呢？
+
 有趣的代码
 ^^^^^^^^^^^^^^^^^^^^^^^
 - 追踪 ``ApplicationContext`` 发现在 ``AbstractApplicationContext`` 有一段这个代码。它可以在某个类实例化之前加载其他类：

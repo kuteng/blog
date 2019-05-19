@@ -107,6 +107,11 @@ Java中的移位运算符
 - HashMap使用链表法解决 ``Hash冲突`` 的，但是 **JDK1.8** 中根据key的hash与table长度确定table位置，同一个位置的key以链表形式存储，超过一定限制链表转为树。总结为 **数组+链表+红黑树的方式思想** 。
 - 解决 **Hash冲突** 的其他方法：开放定址法、链地址法、再哈希。
 - HashMap中则通过 ``h&(length-1)`` 的方法来代替取模，同样实现了均匀的散列，但比使用 ``h%(length-1)`` 效率要高很多
+
+  JDK10中，hash的算法是： ``tab[(tab.length - 1) & ((key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16))]``
+
+  在源码中， ``newCap`` 是 ``new Node[newCap]`` 数组的长度。 ``threshold`` 是resize()的临界值，一般 ``threshold = tab.length * 0.75`` 。 ``modCount`` 类似与HashMap的版本号，对于 **遍历** Map时，如果此值前后变化了，会马上抛出异常 ``modCount`` 。
+
 - 默认构造器 ``HashMap()`` ：构建一个初始容量为 ``16`` ，负载因子为 0.75 的 HashMap。
 
 参考：
@@ -243,6 +248,28 @@ Spring的事务
   - propagation: 传播行为。有7种传播行为,如：有事务则加入无事务则创建；有事务加入无事务抛错；如果有事务加入否则以无事务执行；有事务挂起新建事务；以非事务执行，如果已存在事务则挂起它；已非事务执行，如果以有事务则抛异常；如果当前存在事务则在嵌套事务内执行，如果当前没有事务则执行与 PROPAGATION_REQUIRED 类似的操作。
   - timeout: 超时。
   - readOnly：是否为只读。依靠数据库实现，告诉数据库此事务中没有修改数据库的操作。
+
+装箱拆箱
+^^^^^^^^^^^^^^^^^^^^^^
+请输出下列内容的输出结果： ::
+
+  Integer i1 = 120;
+  Integer i2 = 120;
+  Integer i3 = 222;
+  Integer i4 = 222;
+  System.out.println(i1 == i2);
+  System.out.println(i3 == i4);
+  Integer i5 = new Integer(120);
+  Integer i6 = new Integer(120);
+  System.out.println(i1 == i5);
+  System.out.println(i5 == i6);
+
+输出结果为： ::
+
+  true
+  false
+  false
+  false
 
 知识点
 ^^^^^^^^^^^^^^^^^^^

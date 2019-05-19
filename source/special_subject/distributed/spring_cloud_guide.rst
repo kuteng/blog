@@ -20,6 +20,46 @@ Spring Cloud入门指南
 
   该实例中， *Eureka Server* 是单节点的，但是在生产环境下应该是多节点的。需要在 *Eureka Server* 的 ``application.properties`` 添加类似这样的配置： ``eureka.client.serviceUrl.defaultZone=http://peer1:1111/eureka/,http://peer2:1111/eureka/`` ，同时在 *Eureka Client* 的 ``application.properties`` 中配置好 ``eureka.client.serviceUrl.defaultZone`` 。
 
+原理
+:::::::::::::::::::::
+服务治理一般都会有两个功能：服务注册、服务发现。通常会有一个注册中心，每个服务单元向注册中心登记自己信息，比如提供的服务，ip, 端口以及一些附近加信息等。注册中心会将新的服务实例发送给其它依赖此服务的实例。 
+
+|the_diagram_of_eureka_server|
+
+服务注册
+  服务提供者在启动时会将自己的信息注册到Eureka Server， Eureka Server收到信息后， 会将数据信息存储在一个双层结构的Map中，其中第一层的key是服务名，第二层的key是具体服务的实例名。
+
+服务同步
+  如果有多个Eureka Server，一个服务提供者向其中一个Eureka Server注册了，这个Eureka Server会向集群内的其它Eureka Server转发这个服务提供者的注册信息，从而实现实现Eureka Server之间的服务同步。
+
+服务续约
+  在注册完成成后，服务提供者会维护一个心中持续发送信息给Eureka Server(注册中心)表示正常运行，以防止Eureka Server将该服务实例从服务列表中剔除。
+
+服务下线
+  当服务实例正常关闭时，它会发送一个服务下线的消息给注册中心，注册中心收到信息后，会将该服务实例状态置为下线，并把该信息传播出去。
+
+  服务下线的集中方式：
+
+  - ``curl -X DELETE http://eureka-server-ip/eureka/apps/{service-name}[/<service-ip>:<service-name>:<service-port>`` 如： ``curl -X DELETE http://localhost:8090/eureka/apps/test-service/localhost:test-service:8081``
+
+    值得注意的是，Eureka客户端每隔一段时间（默认30秒）会发送一次心跳到注册中心续约。如果通过这种方式下线了一个服务，而没有及时停掉的话，该服务很快又会回到服务列表中。所以， **可以先停掉服务，再发送请求将其从列表中移除** 。
+  - 客户端主动通知注册中心下线。如果你的eureka客户端是是一个spring boot应用，可以通过调用以下代码通知注册中心下线。
+
+    ``DiscoveryManager.getInstance().shutdownComponent();`` ，请将它放到某个Controller中。
+
+获取服务
+  当一个服务实例依赖另一个服务时，这时这个服务实例又充当了服务消费者，它会发送一个信息给注册中心, 请求获取注册的服务清单，注册中心会维护一份只读的服务清单来返回给服务消费者。
+
+失效剔除
+  有时候，服务实例可能无法正常提供服务，而注册中心没有收到服务下线的信息。注册中心会创建一个定时任务，将超过一定时间没有服务续约消息的服务实例从服务清单中剔除。
+
+自我保护
+  上面讲到失效剔除时，会将超过一定时间没有收到服务续约消息的实例从服务清单中剔除掉，在这中间还有一个逻辑。如果在运行期间，统计心跳成功的比例低于85%（心跳阈值），注册中心会将当前服务清单中的实例注册信息保护起来，让这些实例不会过期。但是在这种情况下，若服务实例出现问题，那么服务消费者可能会拿到实际已经不能正常运行的服务实例，就会出现调用失败的情况，所以客户端需要有容错机制，比如请求重试，或断路器等。
+
+  但是有一个定时任务默认每15分钟执行一次，会根据运行状况重新计算心跳阈值；但也可能不重新计算，这时，Eureka Server的自我保护状态会一直存在。
+
+  如果要关闭自我保护机制，可以将eureka.server.enable-self-preservation设置为false，以确保注册中心将不可用的服务实例及时剔除。
+
 服务消费
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -63,6 +103,71 @@ Spring Cloud Ribbon
   - 因为java bean: ``restTemplate`` 被 ``@LoadBalanced`` 注解，所以代码 ``restTemplate.getForObject("http://eureka-client/dc", String.class);`` 中，可以只是使用 *Application name* 替换掉 *IP* 与 *端口* 。
 
     实现这一功能的原理是： ``Spring Cloud Ribbon`` 有一个拦截器，它能够在这里进行实际调用的时候，自动的去选取服务实例，并将实际要请求的IP地址和端口替换这里的服务名，从而完成服务接口的调用。
+
+原理
+#######################
+在每个服务实例中根据配置的负载均衡规则，实现负载均衡。
+
+修改配置的方式有：
+
+- 通过 *配置类* ：
+
+  .. code-block:: java
+
+    /**
+     * 该类为配置类
+     * 不应该被ComponentScan扫描
+     */
+    @Configuration
+    public class RibbonConfiguration {
+        @Bean
+        public IRule ribbonRule(){
+            //配置负载均衡的规则，更改为随机
+            return new RandomRule();
+        }
+    }
+
+    /**
+     * 在驱动类中，指定配置类。
+     */
+    @SpringBootApplication
+    @EnableDiscoveryClient
+    // 使用 @RibbonClient 或 @RibbonClients 注解为服务提供者指定配置类
+    @RibbonClient(name = "flim-user",configuration = RibbonConfiguration.class)
+    public class FlimConsumerApplication {
+        @Bean
+        @LoadBalanced
+        public RestTemplate restTemplate(){
+            return new RestTemplate();
+        }
+        public static void main(String[] args) {
+            SpringApplication.run(FlimConsumerApplication.class, args);
+        }
+    }
+
+- 配置文件方式配置 ::
+
+    flim-user:
+      ribbon:
+        NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+  相关配置有：
+
+  - ``NFLoadBalancerClassName`` ：配置 ILoadBalancer 的实现类
+  - ``NFLoadBalancerRuleClassName`` ：配置 IRule 的实现类
+  - ``NFLoadBalancerPingClassName`` ：配置 IPing 实现类
+  - ``NIWSServerListClassName`` ：配置 ServerList 的实现类
+  - ``NIWSServerListFilterClassName`` ：配置 ServerListFilter 的实现类
+
+  常用的 Ribbon 全局配置 ::
+
+    ribbon:
+      ConnectionTimeout: #连接超时时间
+      ReadTimeout: #读取超时时间
+      OkToRetryOnAllOperatotions: #对所有操作请求都进行重试
+      MaxAutoRetriesNextServer: #切换服务器实例的重试次数
+      MaxAutoRetries:  #对当前实例的重试次数
+      ServerListRefreshInterval:  #刷新服务列表源的间隔时间
 
 Spring Cloud Feign
 :::::::::::::::::::::::::::
@@ -172,7 +277,48 @@ Spring Cloud Feign
   详见： :ref:`the_explain_of_thread_isolation`
 
 请求缓存
-  待补充
+  对通过 ``Key`` 信息对请求进行缓存。默认URI里参数都会作为Key，当然这个可以更改。
+
+  相关注解有：
+
+  - ``@CacheResult``
+  - ``@CacheResult(cacheKeyMethod = "methodName")`` 。如： ::
+
+      @CacheResult(cacheKeyMethod = "getCacheKey2")
+      @HystrixCommand
+      public Book test6(Integer id) {
+          return restTemplate.getForObject("http://HELLO-SERVICE/getbook5/{1}", Book.class, id);
+      }
+
+      // 这里的参数就是 getForObject 方法 URI 里的参数。
+      public String getCacheKey2(Integer id) {
+          return String.valueOf(id);
+      }
+
+  - ``@CacheKey`` 指定缓存的key，如下： ::
+
+      @CacheResult
+      @HystrixCommand
+      // CacheKey 被用作修改该方法的参数。
+      public Book test6(@CacheKey Integer id,String aa) {
+          return restTemplate.getForObject("http://HELLO-SERVICE/getbook5/{1}", Book.class, id);
+      }
+
+  - ``@CacheRemove(commandKey = "targetMethodName")`` ，参数 ``commandKey`` 不能缺少。它的意思是：一旦调用被此注解修饰的方法， ``commandKey`` 指向 *目标方法* 的注解将清空。如： ::
+
+      @CacheRemove(commandKey = "test6")
+      @HystrixCommand
+      public Book test7(@CacheKey Integer id) {
+          return null;
+      }
+
+      @CacheResult(cacheKeyMethod = "getCacheKey2")
+      @HystrixCommand
+      public Book test6(Integer id) {
+          return restTemplate.getForObject("http://HELLO-SERVICE/getbook5/{1}", Book.class, id);
+      }
+
+    一旦调用方法 ``test7(id)`` ，则 ``test6(id)`` 对应的缓存就会被清空。
 
 请求合并
   待补充
@@ -224,6 +370,39 @@ Spring Cloud Feign
         })
 
     - 通过配置文件修改：application.properties中的 ``hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=3000`` 。
+
+原理
+::::::::::::::::::
+
+Hystrix 通过如下机制来解决雪崩效应问题：
+
+- 资源隔离：包括线程池隔离和信号量隔离，限制调用分布式服务的资源使用，某一个调用的服务出现问题不会影响其他服务调用。
+- 降级机制：超时降级、资源不足时(线程或信号量)降级，降级后可以配合降级接口返回托底数据。
+- 融断：当失败率达到阀值自动触发降级(如因网络故障/超时造成的失败率高)，熔断器触发的快速失败会进行快速恢复。
+- 缓存：提供了请求缓存、请求合并实现。
+
+资源隔离
+  - 线程池隔离模式：使用一个线程池来存储当前请求，线程池对请求作处理，设置任务返回处理超时时间，堆积的请求先入线程池队列。这种方式要为每个依赖服务申请线程池，有一定的资源消耗，好处是可以应对突发流量（流量洪峰来临时，处理不完可将数据存储到线程池队里慢慢处理）
+  - 信号量隔离模式：使用一个原子计数器（或信号量）记录当前有多少个线程在运行，请求来先判断计数器的数值，若超过设置的最大线程个数则丢弃该类型的新请求，若不超过则执行计数操作请求来计数器+1，请求返回计数器-1。这种方式是严格的控制线程且立即返回模式，无法应对突发流量（流量洪峰来临时，处理的线程超过数量，其他的请求会直接返回，不继续去请求依赖的服务）
+
+服务降级
+  服务降级的目的保证上游服务的稳定性，当整体资源快不够了，将某些服务先关掉，待渡过难关，再开启回来。
+
+  一般有两种模式：
+
+  - 如果服务失败，通过 `fallback` 进行降级，返回静态值。
+  - *级联模式* ，如果服务失败，则调用 *备用服务* 。
+
+  如果资源充足（线程池或信号量等），Hystrix将会执行操作指令。操作指令的调用最终都会到这两个方法：
+
+  - ``HystrixCommand.run()`` ：返回一个响应或者抛出一个异常
+  - ``HystrixObservableCommand.construct()`` ：返回一个可观测的发出响应(s)或发送一个onError通知
+
+  如果执行指令的时间超时，执行线程会抛出 TimeoutException 异常。Hystrix会抛弃结果并直接进入失败处理状态。如果执行指令成功，Hystrix会进行一系列的数据记录，然后返回执行的结果。
+
+源码解读
+::::::::::::::::::::::::
+从 ``HystrixCommandAspect.java`` ，它使用了 *AOP* 技术，有趣的是它里面的很多切点都是 *注解* 。
 
 
 服务网关
@@ -355,3 +534,6 @@ Eureka的自我保护机制
 ^^^^^^^^^^^^^^^^^^^^^
 - 《Spring Cloud微服务实战》
 - `Spring Cloud 微服务实战 <https://www.cnblogs.com/judesheng/p/10622189.html>`_
+
+.. |the_diagram_of_eureka_server| image:: /images/special_subject/distributed/001_the_diagram_of_eureka_server.jpeg
+   :width: 80%

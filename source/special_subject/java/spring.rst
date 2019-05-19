@@ -1,12 +1,6 @@
 Spring
 =====================
 
-.. toctree::
-   :maxdepth: 1
-   :numbered: 0
-
-   spring/ioc
-   spring/mvc
 
 安装
 ^^^^^^^^^^^^^^^^^
@@ -83,6 +77,12 @@ Spring
       </dependency>
 
   - 开发过程中，IDE需要安装 *lombok插件* 。
+
+@PropertySource("classpath:properties/thread-pool.properties")
+  加载 properties 配置文件。可用在被 @Service 等注解修饰的类上。
+
+@ImportResource("classpath:beans.xml")
+  修饰 **驱动类** （一般为 ``Application`` ），可加载相关 bean 的配置文件。让配置文件与注解并存。
 
 配置解惑
 ^^^^^^^^^^^^^^^^^^^^

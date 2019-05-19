@@ -131,6 +131,110 @@ SQL执行时间过长，如何优化，哪些步骤。
   - 使用代理对象，模拟对象和辅助对象来隔离网络，数据库，文件和用户接口。
   - 不确定时，尽量在model里添加代码，必要时才往controler添加代码。view里添加的都应该是便捷功能和简写方法，但不要局限于此。
 
+关于Mysql的索引
+  创建表 ::
+
+    create table test3 (
+      id INT NOT NULL AUTO_INCREMENT,
+      title VARCHAR(100) NOT NULL,
+      code1 int not null,
+      code2 int not null,
+      code3 varchar(50) not null,
+      PRIMARY KEY ( id ),
+      index(code1, code2, code3)
+    );
+
+  下列语句是否会用到我们创建的索引？ ::
+
+    select * from test3 where code1 > 10; /* 使用了 */
+    select * from test3 where code1 = 1 and code2 = 20; /* 使用了 */
+    select * from test3 where code1 = 1 and code2 > 20; /* 使用了 */
+    select * from test3 where code1 = 1 and code2 > 20 and code3 = "user name"; /* 使用了 */
+    select * from test3 where code2 = 20 and code1 = 10 and code3 = "user name"; /* 使用了 */
+    select * from test3 where code2 > 20 and code1 = 10 and code3 = "user name"; /* 使用了 */
+    select * from test3 where code2 = 20 or code1 = 10 and code3 = "user name"; /* 未使用 */
+
+Mysql语句
+  使用一条语句，查询某个班级及格与不及格人数。表结构如下： ``score(user_id, class_id, score)``
+
+  查询语句： ::
+
+    select
+      class 班级,
+      sum(case when score>=60 then 1 else 0 end) as 及格人数,
+      sum(case when score<60 then 1 else 0 end) as 不及格人数
+    from score
+    group by class_id;
+
+泛型的上界下界问题
+  下面的语句是否有错？
+
+  .. code-block:: java
+
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(9);
+        list.add(10);
+        fun1(list);
+        fun2(list);
+        String[] strs = new String[] {"a", "b", "c"};
+        List<String> slist = Arrays.asList(strs);
+        slist.add("d"); // 报错，Arrays.asList()方法转化的数组不能进行 add 操作。
+    }
+
+    public static void fun1(List<? extends Integer> list) {
+        list.add(9); // 报错，上界不能使用 add 方法
+    }
+
+    public static void fun2(List<? super Integer> list) {
+        Integer i = list.get(0); // 报错
+        System.out.println(i);
+    }
+
+流写法
+  借助java的stream()方法，将一个List排序后输出。如下：
+
+  .. code-block:: java
+
+    public class Student {
+        private int id;
+        private String name;
+        private int score;
+
+        public Student(int id, String name, int score) {
+            super();
+            this.id = id;
+            this.name = name;
+            this.score = score;
+        }
+
+        public int getScore() {
+            return score;
+        }
+
+        @Override
+        public String toString() {
+            return "Student [id=" + id + ", name=" + name + ", score=" + score + "]";
+        }
+    }
+
+    public class Test {
+        public static void main(String[] args) {
+            List<Student> list = new ArrayList<Student>();
+            list.add(new Student(1, "name1", 23));
+            list.add(new Student(4, "name4", 67));
+            list.add(new Student(3, "name3", 56));
+            list.add(new Student(2, "name2", 35));
+            list.add(new Student(5, "name5", 78));
+
+            // 下面两句是重点语句
+            List<Student> students = list.stream()
+                    .sorted(Comparator.comparing(Student::getScore))
+                    .collect(Collectors.toList());
+            students.forEach(student -> System.out.println(student));
+        }
+    }
+
 经验
 #######################
 - 提前询问面试官的职位。昨天遇到一个面试官，我在解释死锁时提到了 **资源** 一词，在这种语境下，“资源”代表 *对象* 、 *数据结构* ，而面试官一直认为我说的 *资源* 是 *CPU* 、 *内存* 等硬件资源，所以一直聊不通。面试结束后，我询问他这个问题答案时才知道，他原来是 **HR** 。——好崩溃！

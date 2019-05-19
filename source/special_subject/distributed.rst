@@ -8,3 +8,4 @@
    distributed/apache_thrift
    distributed/spring_cloud_guide
    distributed/spring_cloud_summary
+   distributed/redis
