@@ -203,6 +203,52 @@ Redis快照
 ##################################
 具体请看这里： :ref:`the_example_of_date_update_in_redis`
 
+使用技巧
+^^^^^^^^^^^^^^^^^^^
+
+批量提交
+:::::::::::::::::::
+以String类型为例
+
+可以使用 ``multiSet`` 方法，一次提交多个修改。
+
+.. code-block:: java
+
+  HashMap<String, String> content = new HashMap<String, String>();
+  content.put("stringkey1", "value1");
+  content.put("stringkey2", "value2");
+  content.put("stringkey3", "value3");
+  content.put("stringkey4", "value4");
+  content.put("stringkey5", "value5");
+  content.put("stringkey6", "value6");
+  content.put("stringkey7", "value7");
+  content.put("stringkey8", "value8");
+  content.put("stringkey9", "value9");
+  redisTemplate.opsForValue().multiSet(content);
+
+也可以使用通道，一次连接交互多个命令：
+
+.. code-block:: java
+
+  List<Object> list = redisTemplate.executePipelined(new RedisCallback<String>() {
+      @Override
+      public String doInRedis(RedisConnection connection) throws DataAccessException {
+          StringRedisConnection conn = (StringRedisConnection)connection;
+
+          for(String key: keys) {
+              conn.get(key);
+          }
+
+          return null;
+      }
+  });
+
+  // return strs;
+  List<String> strlist = list.stream()
+          .map(obj -> obj.toString())
+          .collect(Collectors.toList());
+
+  return strlist.toArray(new String[strlist.size()]);
 
 问题总结
 ^^^^^^^^^^^^^^^^^^^
@@ -279,6 +325,36 @@ Redis（主从）+ RabbitMQ + 缓存清理服务
   |example_for_data_update_in_redis|
 
   当然，也有的方案是数据库更新完成之后，立马去更新相关缓存数据。这样就不需要MQ 和 缓存清理作业。不过，这同时也增加了系统的耦合性。具体得看自己的业务场景和平台大小。
+
+字符串的序列化
+^^^^^^^^^^^^^^^^^^^^^
+使用 ``redisTemplate.opsForValue().set("testValue", "peter is a gread man.");`` 后，到 ``redis-cli`` 中查询会发现，新建的 *key* 并非 ``testValue`` ，而是 ``\xac\xed\x00\x05t\x00\ttestValue`` 。原因是 *spring-redis* 默认使用 *jedis* 的 ``JdkSerializationRedisSerializer`` 。
+
+解决方法是：
+
+#. 直接使用： ``org.springframework.data.redis.core.StringRedisTemplate`` 。
+
+#. 手动定义序列化的方法。 *spring-data-redis* 中还提供了一个序列化的类专门针对string类型的序列化 ``org.springframework.data.redis.serializer.StringRedisSerializer`` 。
+
+   配置文件中这样使用：
+
+   .. code-block:: xml
+
+     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+       p:connection-factory-ref="jedisConnectionFactory">
+       <property name="keySerializer">
+         <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+       </property>
+       <property name="valueSerializer">
+         <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+       </property>
+       <property name="hashKeySerializer">
+         <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+       </property>
+       <property name="hashValueSerializer">
+         <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+       </property>
+     </bean>
 
 .. |example_for_data_update_in_redis| image:: /images/special_subject/distributed/002_example_for_data_update_in_redis.png
    :width: 80%

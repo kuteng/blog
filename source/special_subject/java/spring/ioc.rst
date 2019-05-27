@@ -809,9 +809,8 @@ XML方式实现
 
 英语
 ^^^^^^^^^^^^^^^^^^^^^^^
-
 没有读懂的句式。
-#######################
+:::::::::::::::::::::::
 - While XML has been the traditional format for defining configuration metadata, you can instruct the container to use Java annotations or code as the metadata format by providing a small amount of XML configuration to declaratively enable support for these additional metadata formats.
 - XML-based configuration metadata configures these beans as <bean/> elements inside a top-level <beans/> element. Java configuration typically uses @Bean-annotated methods within a @Configuration class.
 - Motivations for not supplying a name are related to using inner beans and autowiring collaborators.
@@ -821,7 +820,7 @@ XML方式实现
 
 
 比较难懂的句子
-########################
+::::::::::::::::::::::::
 - Even the simplest application has a few objects that work together to present what the end-user sees as a coherent application
 -  This next section explains how you go from defining a number of bean definitions that stand alone to a fully realized application where objects collaborate to achieve a goal.
 - Code is cleaner with the DI principle, and decoupling is more effective when objects are provided with their dependencies. The object does not look up its dependencies and does not know the location or class of the dependencies. As a result, your classes become easier to test, particularly when the dependencies are on interfaces or abstract base classes, which allow for stub or mock implementations to be used in unit tests.
