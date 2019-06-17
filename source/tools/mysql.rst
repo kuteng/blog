@@ -1,5 +1,24 @@
 MySql
 ========================
+管理命令
+^^^^^^^^^^^^^^^
+首次安装登录
+:::::::::::::::
+- 命令： ``sudo cat /etc/mysql/debian.cnf`` ，可以看到用户密码。
+- 修改密码，本篇文章将密码修改成 root , 用户可自行定义 ::
+
+    use mysql;
+    // 下面这句命令有点长，请注意。
+    update mysql.user set authentication_string=password('root') where user='root' and Host ='localhost';
+    update user set plugin="mysql_native_password";
+    flush privileges;
+    quit;
+
+- 重新启动mysql ::
+
+    sudo service mysql restart
+    mysql -u root -p // 启动后输入已经修改好的密码：root
+
 
 常用命令
 ^^^^^^^^^^^^^^^
